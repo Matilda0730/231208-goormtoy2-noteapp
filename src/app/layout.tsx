@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.scss";
+import Navbar from "./Navbar/Navbar";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,8 +13,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
-			<body>{children}</body>
+		<html lang="ko">
+			<Head>
+				<link
+					rel="stylesheet"
+					href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+				/>
+			</Head>
+			<body>
+				<Navbar />
+				{children}
+			</body>
 		</html>
 	);
 }
