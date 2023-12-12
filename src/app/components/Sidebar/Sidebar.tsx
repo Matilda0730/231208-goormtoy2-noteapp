@@ -8,38 +8,58 @@ import Navbar from "../../Navbar/Navbar";
 
 
 const Sidebar = () => {
+  const sidebarItems = [
+    {
+      name: "메모",
+      iconName: "lightbulb",
+      link: "/",
+      textClass: styles.memo_text,
+    },
+    {
+      name: "알림",
+      iconName: "notifications",
+      link: "/notification",
+      textClass: styles.notification_text,
+    },
+    {
+      name: "라벨 수정",
+      iconName: "edit",
+      link: "/",
+      textClass: styles.editLabel_text,
+    },
+    {
+      name: "보관처리",
+      iconName: "archive",
+      link: "/archiveProcessing",
+      textClass: styles.archiveProcessing_text,
+    },
+    {
+      name: "휴지통",
+      iconName: "delete",
+      link: "/trashCan",
+      textClass: styles.trashCan_text,
+    },
+  ];
+
   return (
     <div className={styles.sidebar_space}>
-      <Link id={styles.focus} href="/" className={styles.sidebar_menu}>
-        <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
-          lightbulb
-        </div>
-        <span className={styles.memo_text}>메모</span>
-      </Link>
-      <Link href="/notification" className={styles.sidebar_menu}>
-        <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
-          notifications
-        </div>
-        <span className={styles.notification_text}>알림</span>
-      </Link>
-      <div className={styles.sidebar_menu}>
-        <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
-          edit
-        </div>
-        <span className={styles.editLabel_text}>라벨 수정</span>
-      </div>
-      <Link href="/archiveProcessing" className={styles.sidebar_menu}>
-        <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
-          archive
-        </div>
-        <span className={styles.archiveProcessing_text}>보관처리</span>
-      </Link>
-      <Link href="/trashCan" className={styles.sidebar_menu}>
-        <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
-          delete
-        </div>
-        <span className={styles.trashCan_text}>휴지통</span>
-      </Link>
+      {sidebarItems.map((page, idx) => {
+        return (
+          <Link
+            key={idx}
+            id={styles.focus}
+            href={page.link}
+            className={styles.sidebar_menu}
+          >
+            <div
+              className={`${styles.sidebar_icons} material-symbols-outlined`}
+            >
+              {page.iconName}
+            </div>
+            <span className={page.textClass}> {page.name}</span>
+          </Link>
+        );
+      })}
     </div>
   );
 };
