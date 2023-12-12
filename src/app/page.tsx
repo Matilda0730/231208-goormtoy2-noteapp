@@ -4,7 +4,6 @@ import styles from "./page.module.scss";
 import "./globals.scss";
 import CreateMemo from "./components/CreateMemo/CreateMemo";
 import react, { useState } from "react";
-import Link from "next/link";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./Navbar/Navbar";
 

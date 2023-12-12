@@ -5,23 +5,29 @@
 
 //사이드바
 .sidebar_space {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	width: 350px;
-	height: 100%;
-	background-color: #202124;
-	color: white;
-	// box-shadow: 2px 0 10px black;
-	z-index: 1;
-	padding: {
-		top: 10px;
-	}
-	transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40px;
+  height: 100%;
+  background-color: #202124;
+  color: white;
+  overflow: hidden;
+  z-index: 1;
+  padding: {
+    top: 10px;
+  }
+  transition: 0.2s;
 }
 
-#focus {
-	background-color: #41331c !important;
+.sidebar_space:hover {
+  width: 350px;
+  box-shadow: 0 0 10px rgba(0, 0, 0);
+  transition: 0.2s;
+}
+
+.currentPage {
+  background-color: #41331c !important;
 }
 
 .sidebar_menu {
@@ -43,6 +49,14 @@
 	background-color: #2d2f33;
 	transition: 0.2s;
 }
+
+// .sidebar_space span:last-child {
+//   opacity: 0;
+//   transition: 0.5s 0.1s;
+// }
+// .sidebar_space:hover span :last-child {
+//   opacity: 1;
+// }
 
 .sidebar_icons {
 	@include flexCenter();
