@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState, memo } from "react";
 import styles from "./Sidebar.module.scss";
 import Link from "next/link";
 
@@ -11,7 +13,7 @@ const Sidebar = () => {
         </div>
         <span className={styles.memo_text}>메모</span>
       </Link>
-      <Link href="/" className={styles.sidebar_menu}>
+      <Link href="/notification" className={styles.sidebar_menu}>
         <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
           notifications
         </div>
@@ -23,13 +25,13 @@ const Sidebar = () => {
         </div>
         <span className={styles.editLabel_text}>라벨 수정</span>
       </div>
-      <Link href="/" className={styles.sidebar_menu}>
+      <Link href="/archiveProcessing" className={styles.sidebar_menu}>
         <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
           archive
         </div>
         <span className={styles.archiveProcessing_text}>보관처리</span>
       </Link>
-      <Link href="/" className={styles.sidebar_menu}>
+      <Link href="/trashCan" className={styles.sidebar_menu}>
         <div className={`${styles.sidebar_icons} material-symbols-outlined`}>
           delete
         </div>

@@ -1,14 +1,11 @@
 "use client";
+import React, { useState } from "react";
+import Sidebar from "../components/Sidebar/Sidebar";
+import CreateMemo from "../components/CreateMemo/CreateMemo";
+import styles from "./notification.module.scss";
 
-import styles from "./page.module.scss";
-import "./globals.scss";
-import CreateMemo from "./components/CreateMemo/CreateMemo";
-import react, { useState } from "react";
-import Sidebar from "./components/Sidebar/Sidebar";
-
-export default function Home() {
+const Notification = () => {
   const [isNone, setIsNone] = useState(true);
-
   return (
     <div className={styles.pageBody}>
       <Sidebar />
@@ -17,14 +14,16 @@ export default function Home() {
         {isNone ? (
           <div className={styles.explanation}>
             <div className={`${styles.first_icon} material-symbols-outlined`}>
-              lightbulb
+              notifications
             </div>
             <span className={styles.first_text}>
-              추가한 메모가 여기에 표시됩니다.
+              예정된 알림의 메모가 여기에 표시됩니다.
             </span>
           </div>
         ) : null}
       </div>
     </div>
   );
-}
+};
+
+export default Notification;
