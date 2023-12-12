@@ -6,7 +6,7 @@
 .pageBody {
   display: flex;
   width: 100vw;
-  height: 100%;
+  height: 90vh;
 }
 
 //메인바디
@@ -26,8 +26,8 @@
 
 .first_icon {
   font: {
-    size: 8rem;
-    weight: bold;
+    size: 8rem !important;
+    weight: bold !important;
   }
   color: gray;
 }
