@@ -39,7 +39,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className={styles.sidebar_space}>
+    <div className={`${styles.sidebar_space}`}>
       {sidebarItems.map((page, idx) => {
         return (
           <Link
