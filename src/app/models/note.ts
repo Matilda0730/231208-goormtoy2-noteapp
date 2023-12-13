@@ -1,4 +1,4 @@
-import BackgroundColor from "./BackgroundColor";
+import BackgroundColor from "./backgroundColor";
 import { Tag } from "./tag";
 
 interface Note {
