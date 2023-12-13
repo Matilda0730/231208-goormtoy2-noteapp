@@ -8,28 +8,24 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./Navbar/Navbar";
 
 export default function Home() {
+	const [isNone, setIsNone] = useState(true);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const [isNone, setIsNone] = useState(true);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+	const toggleSidebar = () => {
+		setIsSidebarOpen(!isSidebarOpen);
+	};
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  return (
-    <div className={styles.main_body}>
-      <CreateMemo />
-      {isNone ? (
-        <div className={styles.explanation}>
-          <div className={`${styles.first_icon} material-symbols-outlined`}>
-            lightbulb
-          </div>
-          <span className={styles.first_text}>
-            추가한 메모가 여기에 표시됩니다.
-          </span>
-        </div>
-      ) : null}
-    </div>
-  );
-
+	return (
+		<div className={styles.main_body}>
+			<CreateMemo />
+			{isNone ? (
+				<div className={styles.explanation}>
+					<div className={`${styles.first_icon} material-symbols-outlined`}>
+						lightbulb
+					</div>
+					<span className={styles.first_text}>추가한 메모가 여기에 표시됩니다.</span>
+				</div>
+			) : null}
+		</div>
+	);
 }
