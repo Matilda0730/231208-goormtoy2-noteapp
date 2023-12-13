@@ -1,6 +1,6 @@
 @mixin flexCenter {
-	display: flex !important;
-	align-items: center !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 //사이드바
@@ -26,6 +26,12 @@
   transition: 0.3s;
 }
 
+.toggle_sidebar {
+  width: 350px;
+  box-shadow: 0 0 10px rgba(0, 0, 0);
+  transition: 0.3s;
+}
+
 .open {
   width: 350px !important;
   transition: 0.3s;
@@ -36,16 +42,15 @@
   transition: 0.3s;
 }
 
-.sidebar_space:hover .sidebar_menu span {
-  display: block;
-}
+// .sidebar_space:hover .sidebar_menu span {
+//   display: block;
+// }
 
 .currentPage {
   background-color: #41331c !important;
 }
 
 .sidebar_menu {
-
   @include flexCenter();
   justify-content: left;
   box-sizing: border-box;
@@ -62,15 +67,13 @@
 
 .sidebar_menu:hover {
   background-color: #2d2f33;
-
 }
 
-.sidebar_menu span {
-  display: none;
-}
+// .sidebar_menu span {
+//   display: none;
+// }
 
 .sidebar_icons {
-
   @include flexCenter();
   justify-content: left !important;
   width: 25px;
