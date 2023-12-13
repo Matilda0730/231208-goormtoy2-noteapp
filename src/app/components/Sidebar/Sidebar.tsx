@@ -50,8 +50,8 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${isSidebarOpen ? styles.toggle_sidebar : ""}${
-        styles.sidebar_space
+      className={`${styles.sidebar_space} ${
+        isSidebarOpen ? styles.toggle_sidebar : ""
       }`}
     >
       {sidebarItems.map((page, idx) => {
