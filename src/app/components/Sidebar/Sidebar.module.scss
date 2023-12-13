@@ -1,6 +1,6 @@
 @mixin flexCenter {
-  display: flex !important;
-  align-items: center !important;
+	display: flex !important;
+	align-items: center !important;
 }
 
 //사이드바
@@ -45,6 +45,7 @@
 }
 
 .sidebar_menu {
+
   @include flexCenter();
   justify-content: left;
   box-sizing: border-box;
@@ -61,6 +62,7 @@
 
 .sidebar_menu:hover {
   background-color: #2d2f33;
+
 }
 
 .sidebar_menu span {
@@ -68,6 +70,7 @@
 }
 
 .sidebar_icons {
+
   @include flexCenter();
   justify-content: left !important;
   width: 25px;

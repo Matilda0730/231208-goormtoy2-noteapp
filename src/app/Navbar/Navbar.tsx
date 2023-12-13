@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import styles from "./NavbarPage.module.scss";
 import "../globals.scss";
+
 
 const Navbar: React.FC = () => {
   const [icon, setIcon] = useState<"view_stream" | "grid_view">("view_stream");

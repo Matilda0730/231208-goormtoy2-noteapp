@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, memo } from "react";
+
+import React, { useEffect, useState, memo, useRef } from "react";
 import styles from "./Sidebar.module.scss";
 import Link from "next/link";
+import Navbar from "../../Navbar/Navbar";
+
 
 const Sidebar = () => {
   const sidebarItems = [

@@ -5,8 +5,10 @@ import "./globals.scss";
 import CreateMemo from "./components/CreateMemo/CreateMemo";
 import react, { useState } from "react";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./Navbar/Navbar";
 
 export default function Home() {
+
   const [isNone, setIsNone] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -29,4 +31,5 @@ export default function Home() {
       ) : null}
     </div>
   );
+
 }
