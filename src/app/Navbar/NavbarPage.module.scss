@@ -1,127 +1,127 @@
 @import url("https://fonts.cdnfonts.com/css/product-sans");
 
 .search_wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 auto;
-  width: 760px;
-  max-width: 760px;
-  margin-left: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin: 0 auto;
+	width: 760px;
+	max-width: 760px;
+	margin-left: 60px;
 }
 
 .Navbar_container {
-  font-family: "Product Sans", sans-serif;
-  box-sizing: 80px;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  position: fixed;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.12);
-  z-index: 10;
-  margin: 0;
-  left: -1px;
-  top: -8px;
-  background-color: #202124;
+	font-family: "Product Sans", sans-serif;
+	box-sizing: 80px;
+	width: 100%;
+	height: 70px;
+	display: flex;
+	position: fixed;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.12);
+	z-index: 10;
+	margin: 0;
+	left: -1px;
+	top: -8px;
+	background-color: #202124;
 
-  border-bottom: 1px solid gray;
-  padding-top: 6px;
+	border-bottom: 1px solid gray;
+	padding-top: 6px;
 
-  .menu_bar,
-  .search_bar,
-  .option_bar,
-  .toggle_bar {
-    display: flex;
-    align-items: center;
-  }
+	.menu_bar,
+	.search_bar,
+	.option_bar,
+	.toggle_bar {
+		display: flex;
+		align-items: center;
+	}
 }
 
 .search_bar {
-  flex-grow: 1;
-  width: 100px;
+	flex-grow: 1;
+	width: 100px;
 }
 
 .menu_bar span:hover,
 .search_bar span:hover,
 .option_bar span:hover,
 .toggle_bar span:hover {
-  background-color: rgba(0, 0, 0, 0.12);
-  border-radius: 20px;
-  color: rgb(89, 89, 89);
-  cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.12);
+	border-radius: 20px;
+	color: rgb(89, 89, 89);
+	cursor: pointer;
 }
 
 .search_input {
-  -webkit-border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  height: 40px;
-  max-width: 720px;
-  position: relative;
-  padding: 5px;
-  padding-left: 40px; // 아이콘 크기에 맞게 패딩 조정
-  &::placeholder {
-    margin-left: 5px;
-  }
-  background: #494a4c;
-  color: white;
-  border: none;
-  font-size: 20px;
+	-webkit-border-radius: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 40px;
+	max-width: 720px;
+	position: relative;
+	padding: 5px;
+	padding-left: 40px; // 아이콘 크기에 맞게 패딩 조정
+	&::placeholder {
+		margin-left: 5px;
+	}
+	background: #494a4c;
+	color: white;
+	border: none;
+	font-size: 20px;
 }
 
 .search_input:focus {
-  outline: none !important;
+	outline: none !important;
 }
 
 #search_icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  margin-top: 12px;
-  margin-left: 5px;
-  width: 30px;
-  z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	margin-top: 12px;
+	margin-left: 5px;
+	width: 30px;
+	z-index: 1;
 }
 .search_input :focus {
-  border: none;
-  background: rgba(0, 0, 0, 0.12);
+	border: none;
+	background: rgba(0, 0, 0, 0.12);
 }
 
 .menu_bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin-left: 20px;
 }
 
 .menu_bar img {
-  width: 44px;
-  height: 40px;
-  padding: 10px;
+	width: 44px;
+	height: 40px;
+	padding: 10px;
 }
 
 .menu_bar p {
-  font-size: 24px;
-  color: white;
+	font-size: 24px;
+	color: white;
 }
 
 .option_bar {
-  display: flex;
-  align-items: center;
-  margin-right: 40px;
-  margin-left: 40px;
+	display: flex;
+	align-items: center;
+	margin-right: 40px;
+	margin-left: 40px;
 }
 
 .toggle_bar {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
+	display: flex;
+	align-items: center;
+	margin-right: 20px;
 }

@@ -5,26 +5,27 @@
 
 //사이드바
 .sidebar_space {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 60px;
-  height: 100%;
-  background-color: #202124;
-  color: white;
-  overflow: hidden;
-  z-index: 1;
-  padding: {
-    top: 10px;
-  }
-  transition: 0.3s;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 60px;
+	height: 100%;
+	background-color: #202124;
+	color: white;
+	overflow: hidden;
+	z-index: 1;
+	padding: {
+		top: 10px;
+	}
+	transition: 0.3s;
 }
 
 .sidebar_space:hover {
-  width: 350px;
-  box-shadow: 0 0 10px rgba(0, 0, 0);
-  transition: 0.3s;
+	width: 350px;
+	box-shadow: 0 0 10px rgba(0, 0, 0);
+	transition: 0.3s;
 }
+
 
 .toggle_sidebar {
   width: 350px;
@@ -36,11 +37,12 @@
 //   display: block;
 // }
 
+
 .currentPage {
-  background-color: #41331c !important;
+	background-color: #41331c !important;
 }
 
-.sidebar_menu {
+
   @include flexCenter();
   justify-content: left;
   box-sizing: border-box;
