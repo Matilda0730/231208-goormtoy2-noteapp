@@ -4,6 +4,7 @@ import React, { useEffect, useState, memo, useRef } from "react";
 import styles from "./Sidebar.module.scss";
 import Link from "next/link";
 import Navbar from "../../Navbar/Navbar";
+
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
 
@@ -29,6 +30,7 @@ const Sidebar = () => {
 			})}
 		</div>
 	);
+
 };
 
 export default Sidebar;
