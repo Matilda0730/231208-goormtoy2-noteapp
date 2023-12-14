@@ -3,12 +3,19 @@
   align-items: center !important;
 }
 
+@mixin flexCenterX2 {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 //사이드바
 .sidebar_space {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 60px;
+  width: 70px;
+  min-width: 70px;
   height: 100%;
   background-color: #202124;
   color: white;
@@ -44,7 +51,7 @@
   @include flexCenter();
   justify-content: left;
   box-sizing: border-box;
-  width: 280px;
+  width: 295px;
   height: 50px;
   border-top-right-radius: 40px;
   border-bottom-right-radius: 40px;
@@ -71,4 +78,115 @@
   margin: {
     right: 20px;
   }
+}
+
+.ReactModal__Overlay {
+  background-color: rgb(0 0 0 / 0%);
+}
+
+.ReactModal__Content {
+  outline: none;
+}
+
+.modal_container {
+  @include flexCenterX2();
+  position: fixed !important;
+  top: 45%;
+  left: 44%;
+  width: 300px;
+  height: fit-content;
+  box-shadow: 0 0 10px black;
+  border-radius: 1px;
+  z-index: 100;
+}
+
+.modal_space {
+  display: flex;
+  flex-direction: column !important;
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  border-radius: 3px;
+  background-color: #313235;
+  color: white;
+  z-index: 100;
+}
+
+.modal_upperSpace {
+  height: fit-content;
+  padding: 15px;
+}
+
+.modal_title {
+  font: {
+    size: 17px;
+  }
+}
+
+.modal_inputspace {
+  @include flexCenterX2();
+  width: 100%;
+  height: 50px;
+  gap: 10px;
+}
+
+.add {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: gray;
+  font-size: 15px;
+}
+
+.add:hover {
+  color: white;
+  background-color: rgb(66, 66, 66);
+}
+
+.input {
+  outline: none;
+  background-color: #313235;
+  border: none;
+  height: 25px;
+  font-size: 15px;
+  color: white;
+}
+
+.input::placeholder {
+  color: gray;
+}
+
+.input:focus {
+  border-bottom: 1px solid gray;
+}
+
+// .input:focus .make {
+//   visibility: block;
+// }
+
+.make {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: gray;
+  font-size: 10px;
+  // display: none;
+}
+
+.modal_downSpace {
+  display: flex;
+  justify-content: right;
+  align-items: center !important;
+  width: 100%;
+  height: 70px;
+  border-top: 1px solid white;
+}
+
+.closingBtn {
+  width: 60px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #313235;
+  margin-right: 10px;
 }
