@@ -15,7 +15,7 @@ const Sidebar = () => {
     (state: RootState) => state.sidebar.isSidebarOpen
   );
   // const isSidebarOpen = useSelector((state: RootState) => state.navbar.isSidebarOpen);
-  //
+
   const sidebarItems = [
     {
       name: "메모",
