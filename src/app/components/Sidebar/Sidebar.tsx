@@ -38,7 +38,11 @@ const Sidebar = () => {
 	useEffect(() => {
 		const savedItemName = localStorage.getItem("selectedItemName");
 		if (savedItemName) {
-			dispatch(setSelectedItem(savedItemName));
+			if (savedItemName === "메모") {
+				dispatch(setSelectedItem("Keep"));
+			} else {
+				dispatch(setSelectedItem(savedItemName));
+			}
 		}
 	}, [dispatch]);
 
