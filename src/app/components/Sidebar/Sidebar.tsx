@@ -27,12 +27,20 @@ const Sidebar = () => {
 	};
 
 	const handleItemClick = (itemName: string) => {
+		localStorage.setItem("selectedItemName", itemName);
 		if (itemName === "메모") {
 			dispatch(setSelectedItem("Keep"));
 		} else if (itemName !== "라벨 수정") {
 			dispatch(setSelectedItem(itemName));
 		}
 	};
+
+	useEffect(() => {
+		const savedItemName = localStorage.getItem("selectedItemName");
+		if (savedItemName) {
+			dispatch(setSelectedItem(savedItemName));
+		}
+	}, [dispatch]);
 
 	const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isSidebarOpen);
 

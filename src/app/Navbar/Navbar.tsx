@@ -16,24 +16,28 @@ const Navbar: React.FC = () => {
 	return (
 		<div className={styles.Navbar_container}>
 			<div className={styles.menu_bar}>
-				<span
-					onClick={() => {
-						dispatch(toggleSidebar());
-						console.log(isSidebarOpen);
-					}}
-					className="material-symbols-outlined icons"
-				>
-					menu
-				</span>
-				{selectedItemName === "Keep" ? (
-					<img
-						src="https://www.gstatic.com/images/branding/product/2x/keep_2020q4_48dp.png"
-						alt="menu"
-					></img>
-				) : (
-					<></>
-				)}
-				<p>{selectedItemName}</p>
+				<div className={styles.menu_bar_icon}>
+					<span
+						onClick={() => {
+							dispatch(toggleSidebar());
+							console.log(isSidebarOpen);
+						}}
+						className="material-symbols-outlined icons"
+					>
+						menu
+					</span>
+				</div>
+				<div className={styles.keep_and_name}>
+					{selectedItemName === "Keep" ? (
+						<img
+							src="https://www.gstatic.com/images/branding/product/2x/keep_2020q4_48dp.png"
+							alt="menu"
+						></img>
+					) : (
+						<div className={styles.img_div}></div>
+					)}
+					<p>{selectedItemName}</p>
+				</div>
 			</div>
 
 			<div className={styles.search_bar}>

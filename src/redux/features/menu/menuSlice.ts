@@ -46,7 +46,7 @@ const initialState: SidebarState = {
 			textClass: styles.trashCan_text,
 		},
 	],
-	selectedItem: "Keep",
+	selectedItem: localStorage.getItem("selectedItemName") || "Keep",
 };
 
 const menuSlice = createSlice({
