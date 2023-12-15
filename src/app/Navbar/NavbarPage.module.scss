@@ -7,7 +7,7 @@
 	margin: 0 auto;
 	width: 760px;
 	max-width: 760px;
-	margin-left: 60px;
+	margin-left: 150px;
 }
 
 .Navbar_container {
@@ -28,17 +28,33 @@
 	border-bottom: 1px solid gray;
 	padding-top: 6px;
 	box-sizing: border-box;
+}
 
-	.menu_bar,
-	.search_bar,
-	.option_bar,
-	.toggle_bar {
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+.menu_bar,
+.search_bar,
+.option_bar,
+.toggle_bar {
+	width: 60px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.img_div {
+	width: 20px;
+	height: 40px;
+}
+
+.keep_and_name {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .search_bar {
@@ -46,17 +62,44 @@
 	width: 100px;
 }
 
+.menu_bar span,
+.search_bar span,
+.option_bar span,
+.toggle_bar span {
+	cursor: pointer;
+	position: relative;
+	transition: background-color 0.3s;
+}
+
+.menu_bar span::after,
+.search_bar span::after,
+.option_bar span::after,
+.toggle_bar span::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #2f3034;
+	transition: transform 0.3s;
+	z-index: -1;
+}
+
 .menu_bar span:hover,
 .search_bar span:hover,
 .option_bar span:hover,
 .toggle_bar span:hover {
-	cursor: pointer;
-	background-color: #2f3034;
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-
 	color: #e2e2e3;
+}
+
+.menu_bar span:hover::after,
+.search_bar span:hover::after,
+.option_bar span:hover::after,
+.toggle_bar span:hover::after {
+	transform: translate(-50%, -50%) scale(1);
 }
 
 .search_input {
@@ -102,10 +145,11 @@
 }
 
 .menu_bar {
-	position: relative;
 	display: flex;
 	align-items: center;
-	margin-left: 65px;
+	justify-content: start;
+	margin-left: 25px;
+	margin-top: 1px;
 
 	img {
 		width: 44px;
@@ -117,12 +161,24 @@
 		font-size: 24px;
 		color: white;
 	}
+
+	span {
+		margin-top: 4px;
+	}
+}
+
+.menu_bar_icon {
+	flex-shrink: 0;
+	margin-right: 5px;
+}
+.menu_bar p {
+	white-space: nowrap;
 }
 
 .option_bar {
 	display: flex;
 	align-items: center;
-	margin-right: 40px;
+	margin-right: 80px;
 	margin-left: 40px;
 	padding: 5px;
 	span {

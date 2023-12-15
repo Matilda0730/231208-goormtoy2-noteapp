@@ -2,23 +2,23 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 * {
-  margin: 0;
-  text-decoration: none;
+	margin: 0;
+	text-decoration: none;
 }
 
 a {
-  color: white;
+	color: white;
 }
 
 body {
-  background-color: #202124;
-  position: relative;
-  height: calc(100vh - 62px);
-  margin-top: 62px;
-  display: flex;
+	background-color: #202124;
+	position: relative;
+	height: calc(100vh - 62px);
+	margin-top: 62px;
+	display: flex;
 }
 
 .icons {
-  color: white;
-  margin: 5px;
+	color: white;
+	// margin: 5px;
 }
