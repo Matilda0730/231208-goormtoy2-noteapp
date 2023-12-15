@@ -1,9 +1,24 @@
-// import { createSlice } from "@reduxjs/toolkit";
+// redux/features/modalSlice.js
 
-// import React from "react";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// const modalSlice = () => {
-// 	return <div>modalSlice</div>;
-// };
+interface ModalState {
+	isModalOpen: boolean;
+}
 
-// export default modalSlice;
+const initialState: ModalState = {
+	isModalOpen: false,
+};
+
+export const modalSlice = createSlice({
+	name: "modal",
+	initialState,
+	reducers: {
+		setOpen: (state, action: PayloadAction<boolean>) => {
+			state.isModalOpen = action.payload;
+		},
+	},
+});
+
+export const { setOpen } = modalSlice.actions;
+export default modalSlice.reducer;
