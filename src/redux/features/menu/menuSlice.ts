@@ -10,6 +10,7 @@ interface SidebarItem {
 
 interface SidebarState {
 	items: SidebarItem[];
+	selectedItem: string;
 }
 
 const initialState: SidebarState = {
@@ -45,12 +46,19 @@ const initialState: SidebarState = {
 			textClass: styles.trashCan_text,
 		},
 	],
+	selectedItem: "Keep",
 };
 
-const sidebarSlice = createSlice({
+const menuSlice = createSlice({
 	name: "menu",
 	initialState,
-	reducers: {},
+	reducers: {
+		setSelectedItem: (state, action) => {
+			state.selectedItem = action.payload;
+		},
+	},
 });
 
-export default sidebarSlice.reducer;
+export const { setSelectedItem } = menuSlice.actions;
+
+export default menuSlice.reducer;
