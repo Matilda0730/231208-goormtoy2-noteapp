@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import styles from "./ModalState.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdAdd } from "react-icons/io";
-// import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
 import { handleCloseModal } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
@@ -15,9 +15,34 @@ const ModalState = () => {
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
-  const [plusAndX, setPlusAndX] = useState("");
+  const [plusAndX, setPlusAndX] = useState(
+    <MdOutlineCancel className={styles.add} />
+  );
+  const [mode, setMode] = useState(false);
 
-  useEffect(() => {});
+  // const handleIcons = () => {
+  //   if (mode) {
+  //     setPlusAndX(
+  //       <IoMdAdd
+  //         className={styles.add}
+  //         onClick={() => {
+  //           setMode(true);
+  //           handleIcons();
+  //         }}
+  //       />
+  //     );
+  //   } else {
+  //     setPlusAndX(
+  //       <MdOutlineCancel
+  //         className={styles.add}
+  //         onClick={() => {
+  //           setMode(false);
+  //           handleIcons();
+  //         }}
+  //       />
+  //     );
+  //   }
+  // };
 
   const handleClose = () => {
     dispatch(handleCloseModal());
@@ -41,10 +66,10 @@ const ModalState = () => {
         <div className={styles.modal_upperSpace}>
           <span className={styles.modal_title}>라벨 수정</span>
           <div className={styles.modal_inputspace}>
-            <IoMdAdd className={styles.add} />
-            {/* <MdOutlineCancel className={styles.add} /> */}
+            {plusAndX}
             <input
               type="text"
+              autoFocus
               className={styles.input}
               placeholder="새 라벨 만들기"
             />

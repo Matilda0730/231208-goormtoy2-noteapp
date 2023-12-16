@@ -63,7 +63,7 @@ const Sidebar = () => {
                 >
                   {page.iconName}
                 </div>
-                <span className={page.textClass}>{page.name}</span>
+                <span>{page.name}</span>
               </div>
             ) : (
               <Link
@@ -77,7 +77,7 @@ const Sidebar = () => {
                 >
                   {page.iconName}
                 </div>
-                <span className={page.textClass}>{page.name}</span>
+                <span>{page.name}</span>
               </Link>
             )}
           </>
