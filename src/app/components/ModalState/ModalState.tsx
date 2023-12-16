@@ -5,13 +5,10 @@ import Modal from "react-modal";
 import styles from "./ModalState.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdAdd } from "react-icons/io";
-import { MdOutlineCancel } from "react-icons/md";
+// import { MdOutlineCancel } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
-import { RootState } from "../../../redux/store";
-import {
-  handleOpenModal,
-  handleCloseModal,
-} from "../../../redux/features/modal/modalSlice";
+import { handleCloseModal } from "reduxprops/features/modal/modalSlice";
+import { RootState } from "reduxprops/store/store";
 
 const ModalState = () => {
   const dispatch = useDispatch();

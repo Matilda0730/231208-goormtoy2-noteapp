@@ -2,13 +2,13 @@
 
 import styles from "./page.module.scss";
 import "./globals.scss";
-import CreateMemo from "./components/CreateMemo/CreateMemo";
+
 import react, { useState } from "react";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Navbar from "./Navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { toggleSidebar } from "../redux/features/sidebar/sidebarSlice";
+
+import CreateMemo from "@components/CreateMemo/CreateMemo";
+import { toggleSidebar } from "reduxprops/features/sidebar/sidebarSlice";
+import { RootState } from "reduxprops/store/store";
 
 export default function Home() {
   const [isNone, setIsNone] = useState(true);

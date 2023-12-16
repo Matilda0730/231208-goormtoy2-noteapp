@@ -4,13 +4,11 @@ import React, { useEffect, useState, memo, useRef } from "react";
 import styles from "./Sidebar.module.scss";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import ModalState from "../ModalState/ModalState";
-import { setSelectedItem } from "../../../redux/features/menu/menuSlice";
-import {
-  handleOpenModal,
-  handleCloseModal,
-} from "../../../redux/features/modal/modalSlice";
+
+import ModalState from "@components/ModalState/ModalState";
+import { handleOpenModal } from "@slice/modal/modalSlice";
+import { setSelectedItem } from "@slice/menu/menuSlice";
+import { RootState } from "reduxprops/store/store";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
