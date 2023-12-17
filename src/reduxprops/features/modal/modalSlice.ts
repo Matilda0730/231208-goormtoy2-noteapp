@@ -10,7 +10,19 @@ const initialState: ModalState = {
   isModalOpen: false,
 };
 
-export const modalSlice = createSlice({
+interface ModalLabel {
+  name: string;
+}
+
+interface ModalLabels {
+  labels: ModalLabel[];
+}
+
+const labelsOnModal: ModalLabels = {
+  labels: [],
+};
+
+const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
@@ -23,11 +35,19 @@ export const modalSlice = createSlice({
     },
 
     handleCloseModal: (state) => {
-      state.isModalOpen = false;
       // setOpen(false);
+      state.isModalOpen = false;
+    },
+    setNewLabels: (state, action) => {
+      const newLabel = {
+        name: action.payload,
+      };
+      labelsOnModal.labels.push(newLabel);
+      console.log(labelsOnModal.labels);
     },
   },
 });
 
-export const { handleOpenModal, handleCloseModal } = modalSlice.actions;
+export const { handleOpenModal, handleCloseModal, setNewLabels } =
+  modalSlice.actions;
 export default modalSlice.reducer;

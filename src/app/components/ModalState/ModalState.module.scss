@@ -53,17 +53,18 @@
   gap: 10px;
 }
 
-.add {
+.inputIcons {
+  @include flexCenterX2();
   width: 25px;
   height: 25px;
   padding: 3px;
   border-radius: 50%;
   color: gray;
-  font-size: 15px;
+  font-size: 20px !important;
   cursor: pointer;
 }
 
-.add:hover {
+.inputIcons:hover {
   color: white;
   background-color: rgb(66, 66, 66);
 }
@@ -83,26 +84,6 @@
 
 .input:focus {
   border-bottom: 1px solid gray;
-}
-
-// .input:focus .make {
-//   visibility: block;
-// }
-
-.make {
-  width: 25px;
-  height: 25px;
-  padding: 3px;
-  border-radius: 50%;
-  color: gray;
-  font-size: 10px;
-  visibility: hidden;
-  cursor: pointer;
-}
-
-.make:hover {
-  color: white;
-  background-color: gray;
 }
 
 .modal_downSpace {

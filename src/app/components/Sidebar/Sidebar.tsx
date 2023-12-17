@@ -52,7 +52,7 @@ const Sidebar = () => {
       {sidebarItems.map((page, idx) => {
         return (
           <>
-            {idx === 2 ? (
+            {page.iconName === "edit" ? (
               <div
                 key={idx}
                 className={styles.sidebar_menu}
