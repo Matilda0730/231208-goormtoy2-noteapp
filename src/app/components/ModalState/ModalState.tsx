@@ -7,42 +7,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineCancel } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
-import { handleCloseModal } from "reduxprops/features/modal/modalSlice";
+import {
+  handleCloseModal,
+  setNewLabels,
+} from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
+import { setCreatedLabel } from "@slice/menu/menuSlice";
 
 const ModalState = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
-  const [plusAndX, setPlusAndX] = useState(
-    <MdOutlineCancel className={styles.add} />
-  );
-  const [mode, setMode] = useState(false);
+  const [labelName, setLabelName] = useState("");
+  const [mode, setMode] = useState(true);
 
-  // const handleIcons = () => {
-  //   if (mode) {
-  //     setPlusAndX(
-  //       <IoMdAdd
-  //         className={styles.add}
-  //         onClick={() => {
-  //           setMode(true);
-  //           handleIcons();
-  //         }}
-  //       />
-  //     );
-  //   } else {
-  //     setPlusAndX(
-  //       <MdOutlineCancel
-  //         className={styles.add}
-  //         onClick={() => {
-  //           setMode(false);
-  //           handleIcons();
-  //         }}
-  //       />
-  //     );
-  //   }
-  // };
+  const handleAddLabel = () => {
+    if (!labelName) {
+      return;
+    }
+    dispatch(setCreatedLabel(labelName));
+    dispatch(setNewLabels(labelName));
+    console.log(labelName);
+    setLabelName("");
+  };
 
   const handleClose = () => {
     dispatch(handleCloseModal());
@@ -55,6 +43,9 @@ const ModalState = () => {
     },
   };
 
+  // 왜 modal을 쓰면 isModalOpen밖에 인식을 못할까..
+  // const modalLabels = useSelector((state: RootState) => state.modal.labels);
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -65,16 +56,62 @@ const ModalState = () => {
       <div className={styles.modal_space}>
         <div className={styles.modal_upperSpace}>
           <span className={styles.modal_title}>라벨 수정</span>
-          <div className={styles.modal_inputspace}>
-            {plusAndX}
-            <input
-              type="text"
-              autoFocus
-              className={styles.input}
-              placeholder="새 라벨 만들기"
-            />
-            <IoMdCheckmark className={styles.make} />
-          </div>
+          {mode ? (
+            <>
+              <div className={styles.modal_inputspace}>
+                <div
+                  className={`${styles.add} material-icons`}
+                  onClick={() => {
+                    setLabelName("");
+                    setMode(false);
+                  }}
+                >
+                  close
+                </div>
+                <input
+                  type="text"
+                  autoFocus
+                  className={styles.input}
+                  placeholder="새 라벨 만들기"
+                  onChange={(e) => setLabelName(e.target.value)}
+                  value={labelName}
+                />
+                <IoMdCheckmark
+                  className={styles.make}
+                  onClick={() => handleAddLabel()}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.modal_inputspace}>
+                <IoMdAdd className={styles.add} onClick={() => setMode(true)} />
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="새 라벨 만들기"
+                  onClick={() => setMode(true)}
+                />
+                <IoMdCheckmark
+                  className={styles.make}
+                  style={{ visibility: "hidden" }}
+                />
+              </div>
+            </>
+          )}
+          {/* {modalLabels.map((name, idx) => {
+            return (
+              <div key={idx} className={styles.createdLabel}>
+                <div className={`${styles.labelsIcon} material-icons`}>
+                  label
+                </div>
+                <div className={styles.labelName}>{name}</div> 
+                <div className={`${styles.labelsIcon} material-icons`}>
+                  edit
+                </div>
+              </div>
+            );
+          })} */}
         </div>
         <div className={styles.modal_downSpace}>
           <button onClick={handleClose} className={styles.closingBtn}>

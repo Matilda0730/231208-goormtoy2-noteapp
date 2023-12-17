@@ -50,9 +50,23 @@ const menuSlice = createSlice({
     setSelectedItem: (state, action) => {
       state.selectedItem = action.payload;
     },
+    // : PayloadAction<string>
+    setCreatedLabel: (state, action) => {
+      const newLabel = {
+        name: action.payload,
+        iconName: "label",
+        link: `/${action.payload}`,
+      };
+      const updatedLabel = [
+        ...state.items.slice(0, 2),
+        newLabel,
+        ...state.items.slice(2),
+      ];
+      state.items = updatedLabel;
+    },
   },
 });
 
-export const { setSelectedItem } = menuSlice.actions;
+export const { setSelectedItem, setCreatedLabel } = menuSlice.actions;
 
 export default menuSlice.reducer;
