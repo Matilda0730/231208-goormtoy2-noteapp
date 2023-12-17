@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import styles from "./ModalState.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,6 +46,12 @@ const ModalState = () => {
   // 왜 modal을 쓰면 isModalOpen밖에 인식을 못할까..
   // const modalLabels = useSelector((state: RootState) => state.modal.labels);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleDoubleClick = (event: React.MouseEvent) => {
+    event.preventDefault(); // 더블클릭 기본 동작 막기
+  };
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -60,7 +66,8 @@ const ModalState = () => {
             <>
               <div className={styles.modal_inputspace}>
                 <div
-                  className={`${styles.add} material-icons`}
+                  className={`${styles.inputIcons} material-icons`}
+                  style={{ userSelect: "none" }}
                   onClick={() => {
                     setLabelName("");
                     setMode(false);
@@ -69,6 +76,7 @@ const ModalState = () => {
                   close
                 </div>
                 <input
+                  ref={inputRef}
                   type="text"
                   autoFocus
                   className={styles.input}
@@ -76,26 +84,40 @@ const ModalState = () => {
                   onChange={(e) => setLabelName(e.target.value)}
                   value={labelName}
                 />
-                <IoMdCheckmark
-                  className={styles.make}
-                  onClick={() => handleAddLabel()}
-                />
+                <div
+                  className={`${styles.inputIcons} material-icons`}
+                  style={{ userSelect: "none" }}
+                >
+                  done
+                </div>
               </div>
             </>
           ) : (
             <>
               <div className={styles.modal_inputspace}>
-                <IoMdAdd className={styles.add} onClick={() => setMode(true)} />
+                <div
+                  className={`${styles.inputIcons} material-icons`}
+                  style={{ userSelect: "none" }}
+                  onClick={() => {
+                    setMode(true);
+                    inputRef.current && inputRef.current.focus();
+                  }}
+                >
+                  add
+                </div>
                 <input
+                  ref={inputRef}
                   type="text"
                   className={styles.input}
                   placeholder="새 라벨 만들기"
                   onClick={() => setMode(true)}
                 />
-                <IoMdCheckmark
-                  className={styles.make}
+                <div
+                  className={`${styles.inputIcons} material-icons`}
                   style={{ visibility: "hidden" }}
-                />
+                >
+                  done
+                </div>
               </div>
             </>
           )}
