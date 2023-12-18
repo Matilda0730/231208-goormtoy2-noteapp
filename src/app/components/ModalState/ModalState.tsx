@@ -4,9 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import styles from "./ModalState.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { IoMdAdd } from "react-icons/io";
-import { MdOutlineCancel } from "react-icons/md";
-import { IoMdCheckmark } from "react-icons/io";
 import {
   handleCloseModal,
   setNewLabels,
@@ -19,6 +16,7 @@ const ModalState = () => {
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
+  const modalLabels = useSelector((state: RootState) => state.modal.labels);
   const [labelName, setLabelName] = useState("");
   const [mode, setMode] = useState(true);
 
@@ -28,9 +26,11 @@ const ModalState = () => {
     }
     dispatch(setCreatedLabel(labelName));
     dispatch(setNewLabels(labelName));
-    console.log(labelName);
+    // console.log(modalLabels);
     setLabelName("");
   };
+
+  // useEffect(() => {},[modalLabels]);
 
   const handleClose = () => {
     dispatch(handleCloseModal());
@@ -43,14 +43,7 @@ const ModalState = () => {
     },
   };
 
-  // 왜 modal을 쓰면 isModalOpen밖에 인식을 못할까..
-  // const modalLabels = useSelector((state: RootState) => state.modal.labels);
-
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleDoubleClick = (event: React.MouseEvent) => {
-    event.preventDefault(); // 더블클릭 기본 동작 막기
-  };
 
   return (
     <Modal
@@ -87,6 +80,9 @@ const ModalState = () => {
                 <div
                   className={`${styles.inputIcons} material-icons`}
                   style={{ userSelect: "none" }}
+                  onClick={() => {
+                    handleAddLabel();
+                  }}
                 >
                   done
                 </div>
@@ -121,19 +117,26 @@ const ModalState = () => {
               </div>
             </>
           )}
-          {/* {modalLabels.map((name, idx) => {
-            return (
-              <div key={idx} className={styles.createdLabel}>
-                <div className={`${styles.labelsIcon} material-icons`}>
-                  label
+          <>
+            {modalLabels.map((name, idx) => {
+              console.log(name);
+              return (
+                <div
+                  key={idx}
+                  className={styles.createdLabel}
+                  style={{ display: "flex" }}
+                >
+                  <div className={`${styles.labelsIcon} material-icons`}>
+                    label
+                  </div>
+                  <div className={styles.labelName}>{name}</div>
+                  <div className={`${styles.labelsIcon} material-icons`}>
+                    edit
+                  </div>
                 </div>
-                <div className={styles.labelName}>{name}</div> 
-                <div className={`${styles.labelsIcon} material-icons`}>
-                  edit
-                </div>
-              </div>
-            );
-          })} */}
+              );
+            })}
+          </>
         </div>
         <div className={styles.modal_downSpace}>
           <button onClick={handleClose} className={styles.closingBtn}>
