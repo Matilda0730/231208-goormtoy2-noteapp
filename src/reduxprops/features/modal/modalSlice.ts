@@ -4,10 +4,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ModalState {
   isModalOpen: boolean;
+  labels: string[];
 }
 
 const initialState: ModalState = {
   isModalOpen: false,
+  labels: [],
 };
 
 interface ModalLabel {
@@ -45,6 +47,9 @@ const modalSlice = createSlice({
       labelsOnModal.labels.push(newLabel);
       console.log(labelsOnModal.labels);
     },
+    // getLabels: (state) => {
+    //   return { ...state, labels: labelsOnModal.labels };
+    // }
   },
 });
 
