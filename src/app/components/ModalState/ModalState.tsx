@@ -118,8 +118,8 @@ const ModalState = () => {
             </>
           )}
           <>
-            {modalLabels.map((name, idx) => {
-              console.log(name);
+            {modalLabels.map((label, idx) => {
+              // console.log(name);
               return (
                 <div
                   key={idx}
@@ -129,7 +129,7 @@ const ModalState = () => {
                   <div className={`${styles.labelsIcon} material-icons`}>
                     label
                   </div>
-                  <div className={styles.labelName}>{name}</div>
+                  <div className={styles.labelName}>{label.name}</div>
                   <div className={`${styles.labelsIcon} material-icons`}>
                     edit
                   </div>
