@@ -1,10 +1,14 @@
-// redux/features/modalSlice.js
+// redux/features/modalSlice.ts
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+interface ModalLabel {
+  name: string;
+}
+
 interface ModalState {
   isModalOpen: boolean;
-  labels: string[];
+  labels: ModalLabel[];
 }
 
 const initialState: ModalState = {
@@ -12,44 +16,25 @@ const initialState: ModalState = {
   labels: [],
 };
 
-interface ModalLabel {
-  name: string;
-}
-
-interface ModalLabels {
-  labels: ModalLabel[];
-}
-
-const labelsOnModal: ModalLabels = {
-  labels: [],
-};
-
 const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    // setOpen: (state, action: PayloadAction<boolean>) => {
-    //   state.isModalOpen = action.payload;
-    // },
     handleOpenModal: (state) => {
-      // setOpen(true);
       state.isModalOpen = true;
     },
 
     handleCloseModal: (state) => {
-      // setOpen(false);
       state.isModalOpen = false;
     },
-    setNewLabels: (state, action) => {
-      const newLabel = {
+
+    setNewLabels: (state, action: PayloadAction<string>) => {
+      const newLabel: ModalLabel = {
         name: action.payload,
       };
-      labelsOnModal.labels.push(newLabel);
-      console.log(labelsOnModal.labels);
+      state.labels = [...state.labels, newLabel];
+      console.log(state.labels);
     },
-    // getLabels: (state) => {
-    //   return { ...state, labels: labelsOnModal.labels };
-    // }
   },
 });
 
