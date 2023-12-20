@@ -3,7 +3,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ModalLabel {
-	name: string;
+  name: string;
+  link: string;
+  id: string;
 }
 
 interface ModalState {
@@ -19,31 +21,38 @@ const initialState: ModalState = {
 };
 
 const modalSlice = createSlice({
-	name: "modal",
-	initialState,
-	reducers: {
-		handleOpenModal: (state) => {
-			state.isModalOpen = true;
-		},
 
-		handleCloseModal: (state) => {
-			state.isModalOpen = false;
-		},
+  name: "modal",
+  initialState,
+  reducers: {
+    handleOpenModal: (state) => {
+      state.isModalOpen = true;
+    },
 
-		setNewLabels: (state, action: PayloadAction<string>) => {
-			const newLabel: ModalLabel = {
-				name: action.payload,
-			};
-			state.labels = [...state.labels, newLabel];
-			console.log(state.labels);
-		},
+    handleCloseModal: (state) => {
+      state.isModalOpen = false;
+    },
 
-		toggleColorModal: (state) => {
+    setNewLabels: (state, action: PayloadAction<string>) => {
+      const newLabel: ModalLabel = {
+        name: action.payload,
+        link: action.payload,
+        id: action.payload,
+      };
+      state.labels = [...state.labels, newLabel].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    },
+    deleteLabel: (state, action: PayloadAction<string>) => {
+      state.labels = state.labels.filter(
+        (label) => label.name !== action.payload
+      );
+    },
+    toggleColorModal: (state) => {
 			state.isColorModalVisible = !state.isColorModalVisible;
 		},
-	},
+  },
 });
 
-export const { handleOpenModal, handleCloseModal, setNewLabels, toggleColorModal } =
-	modalSlice.actions;
+export const { handleOpenModal, handleCloseModal, setNewLabels, deleteLabel, toggleColorModal } = modalSlice.actions;
 export default modalSlice.reducer;

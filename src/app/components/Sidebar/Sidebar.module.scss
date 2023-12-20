@@ -39,14 +39,6 @@
   transition: 0.3s;
 }
 
-// .sidebar_space:hover .sidebar_menu span {
-//   display: block;
-// }
-
-.currentPage {
-  background-color: #41331c !important;
-}
-
 .sidebar_menu {
   @include flexCenter();
   justify-content: left;
@@ -62,13 +54,21 @@
   text-wrap: nowrap;
 }
 
+.selected_menu {
+  background-color: #41331c !important;
+}
+
 .sidebar_menu:hover {
   background-color: #2d2f33;
 }
 
-// .sidebar_menu span {
-//   display: none;
-// }
+.sidebar_menu span {
+  display: hidden;
+}
+
+.sidebar_space:hover .sidebar_menu span {
+  display: visible !important;
+}
 
 .sidebar_icons {
   @include flexCenter();
@@ -78,119 +78,4 @@
   margin: {
     right: 20px;
   }
-}
-
-.modal_container {
-  @include flexCenterX2();
-  position: fixed !important;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: fit-content;
-  box-shadow: 0 0 10px black;
-  border-radius: 1px;
-  outline: none !important;
-
-  z-index: 100;
-}
-
-.modal_space {
-  display: flex;
-  flex-direction: column !important;
-  width: 100%;
-  height: 100%;
-  border: none !important;
-  border-radius: 3px;
-  background-color: #313235;
-  color: white;
-  z-index: 100;
-}
-
-.modal_upperSpace {
-  height: fit-content;
-  padding: 15px;
-}
-
-.modal_title {
-  font: {
-    size: 17px;
-  }
-}
-
-.modal_inputspace {
-  @include flexCenterX2();
-  width: 100%;
-  height: 50px;
-  gap: 10px;
-}
-
-.add {
-  width: 25px;
-  height: 25px;
-  padding: 3px;
-  border-radius: 50%;
-  color: gray;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.add:hover {
-  color: white;
-  background-color: rgb(66, 66, 66);
-}
-
-.input {
-  outline: none;
-  background-color: #313235;
-  border: none;
-  height: 25px;
-  font-size: 15px;
-  color: white;
-}
-
-.input::placeholder {
-  color: gray;
-}
-
-.input:focus {
-  border-bottom: 1px solid gray;
-}
-
-// .input:focus .make {
-//   visibility: block;
-// }
-
-.make {
-  width: 25px;
-  height: 25px;
-  padding: 3px;
-  border-radius: 50%;
-  color: gray;
-  font-size: 10px;
-  // display: none;
-  cursor: pointer;
-}
-
-.make:hover {
-  color: white;
-  background-color: gray;
-}
-
-.modal_downSpace {
-  display: flex;
-  justify-content: right;
-  align-items: center !important;
-  width: 100%;
-  height: 70px;
-  border-top: 0.5px solid gray;
-}
-
-.closingBtn {
-  width: 60px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #313235;
-  margin-right: 10px;
 }
