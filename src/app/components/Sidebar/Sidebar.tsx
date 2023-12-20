@@ -43,18 +43,21 @@ const Sidebar = () => {
 
   const sidebarItems = useSelector((state: RootState) => state.menu.items);
 
+  //현재 있는 사이드바 메뉴 색 입히기
+  const [selectedMenu, setSelectedMenu] = useState<string>("memo");
+
   return (
     <div
       className={`${styles.sidebar_space} ${
         isSidebarOpen ? styles.toggle_sidebar : ""
       }`}
     >
-      {sidebarItems.map((page, idx) => {
+      {sidebarItems.map((page) => {
         return (
           <>
             {page.iconName === "edit" ? (
               <div
-                key={idx}
+                key={page.id}
                 className={styles.sidebar_menu}
                 onClick={handleOpen}
               >
@@ -68,9 +71,14 @@ const Sidebar = () => {
             ) : (
               <Link
                 href={page.link}
-                key={idx}
-                className={styles.sidebar_menu}
-                onClick={() => handleItemClick(page.name)}
+                key={page.id}
+                className={`${styles.sidebar_menu} ${
+                  selectedMenu === page.id ? styles.selected_menu : ""
+                }`}
+                onClick={() => {
+                  handleItemClick(page.name);
+                  setSelectedMenu(page.id);
+                }}
               >
                 <div
                   className={`${styles.sidebar_icons} material-symbols-outlined`}

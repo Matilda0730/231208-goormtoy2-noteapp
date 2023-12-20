@@ -7,9 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleCloseModal,
   setNewLabels,
+  deleteLabel,
 } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
 import { setCreatedLabel } from "@slice/menu/menuSlice";
+
+interface ModalTagStateProps {
+  defaultText: string;
+  hoverText: string;
+}
 
 const ModalState = () => {
   const dispatch = useDispatch();
@@ -26,16 +32,21 @@ const ModalState = () => {
     }
     dispatch(setCreatedLabel(labelName));
     dispatch(setNewLabels(labelName));
-    // console.log(modalLabels);
     setLabelName("");
   };
 
-  // useEffect(() => {},[modalLabels]);
+  const handleDeleteLabel = () => {
+    dispatch(deleteLabel(""));
+  };
 
   const handleClose = () => {
     dispatch(handleCloseModal());
   };
 
+  //호버 시 쓰레기통으로 바꾸기
+  const [isHovered, setIsHovered] = useState(false);
+
+  //Modal창 바깥 배경
   const customStyles = {
     overlay: {
       backgroundColor: "#0a0a0a99",
@@ -118,16 +129,21 @@ const ModalState = () => {
             </>
           )}
           <>
-            {modalLabels.map((label, idx) => {
+            {modalLabels.map((label) => {
               // console.log(name);
               return (
                 <div
-                  key={idx}
+                  key={label.id}
                   className={styles.createdLabel}
                   style={{ display: "flex" }}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
                 >
-                  <div className={`${styles.labelsIcon} material-icons`}>
-                    label
+                  <div
+                    className={`${styles.labelsIcon} material-icons`}
+                    onClick={handleDeleteLabel}
+                  >
+                    {isHovered ? "delete" : "label"}
                   </div>
                   <div className={styles.labelName}>{label.name}</div>
                   <div className={`${styles.labelsIcon} material-icons`}>
