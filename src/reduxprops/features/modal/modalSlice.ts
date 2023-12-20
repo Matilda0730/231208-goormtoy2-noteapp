@@ -9,16 +9,19 @@ interface ModalLabel {
 }
 
 interface ModalState {
-  isModalOpen: boolean;
-  labels: ModalLabel[];
+	isModalOpen: boolean;
+	labels: ModalLabel[];
+	isColorModalVisible: boolean;
 }
 
 const initialState: ModalState = {
-  isModalOpen: false,
-  labels: [],
+	isModalOpen: false,
+	labels: [],
+	isColorModalVisible: false,
 };
 
 const modalSlice = createSlice({
+
   name: "modal",
   initialState,
   reducers: {
@@ -45,9 +48,11 @@ const modalSlice = createSlice({
         (label) => label.name !== action.payload
       );
     },
+    toggleColorModal: (state) => {
+			state.isColorModalVisible = !state.isColorModalVisible;
+		},
   },
 });
 
-export const { handleOpenModal, handleCloseModal, setNewLabels, deleteLabel } =
-  modalSlice.actions;
+export const { handleOpenModal, handleCloseModal, setNewLabels, deleteLabel, toggleColorModal } = modalSlice.actions;
 export default modalSlice.reducer;
