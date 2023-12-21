@@ -14,6 +14,7 @@ const CreateMemo = () => {
 	const [title, setTitle] = useState<string>("");
 	const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
 	// const [isModalVisible, setIsModalVisible] = useState(false);
 
 	const handleToggleModal = () => {
