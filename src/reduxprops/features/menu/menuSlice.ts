@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import styles from "../../../app/components/Sidebar/Sidebar.module.scss";
 
 interface SidebarItem {
@@ -12,6 +12,12 @@ interface SidebarState {
   items: SidebarItem[];
   selectedItem: string;
   newLabelSpace: SidebarItem[];
+  modalLabel: ModalLabel[];
+}
+interface ModalLabel {
+  name: string;
+  link: string;
+  id: string;
 }
 
 const initialState: SidebarState = {
@@ -49,6 +55,7 @@ const initialState: SidebarState = {
   ],
   selectedItem: localStorage.getItem("selectedItemName") || "Keep",
   newLabelSpace: [],
+  modalLabel: [],
 };
 
 const menuSlice = createSlice({
@@ -81,9 +88,29 @@ const menuSlice = createSlice({
 
       state.items = updatedLabels;
     },
+    setNewLabelsOnModal: (state, action: PayloadAction<string>) => {
+      const newLabel: ModalLabel = {
+        name: action.payload,
+        link: action.payload,
+        id: action.payload,
+      };
+      state.modalLabel = [...state.modalLabel, newLabel].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    },
+    deleteLabelForBoth: (state, action: PayloadAction<string>) => {
+      state.modalLabel = state.modalLabel.filter(
+        (label) => label.name !== action.payload
+      );
+    },
   },
 });
 
-export const { setSelectedItem, setCreatedLabel } = menuSlice.actions;
+export const {
+  setSelectedItem,
+  setCreatedLabel,
+  setNewLabelsOnModal,
+  deleteLabelForBoth,
+} = menuSlice.actions;
 
 export default menuSlice.reducer;

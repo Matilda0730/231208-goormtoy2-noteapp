@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import styles from "./ModalState.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleCloseModal,
-  setNewLabels,
-  deleteLabel,
-} from "reduxprops/features/modal/modalSlice";
+import { handleCloseModal } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
-import { setCreatedLabel } from "@slice/menu/menuSlice";
+import {
+  deleteLabelForBoth,
+  setCreatedLabel,
+  setNewLabelsOnModal,
+} from "@slice/menu/menuSlice";
 
 interface ModalTagStateProps {
   defaultText: string;
@@ -22,7 +22,7 @@ const ModalState = () => {
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
-  const modalLabels = useSelector((state: RootState) => state.modal.labels);
+  const modalLabels = useSelector((state: RootState) => state.menu.modalLabel);
   const [labelName, setLabelName] = useState("");
   const [mode, setMode] = useState(true);
 
@@ -31,12 +31,12 @@ const ModalState = () => {
       return;
     }
     dispatch(setCreatedLabel(labelName));
-    dispatch(setNewLabels(labelName));
+    dispatch(setNewLabelsOnModal(labelName));
     setLabelName("");
   };
 
   const handleDeleteLabel = () => {
-    dispatch(deleteLabel(""));
+    dispatch(deleteLabelForBoth(""));
   };
 
   const handleClose = () => {
@@ -44,7 +44,7 @@ const ModalState = () => {
   };
 
   //호버 시 쓰레기통으로 바꾸기
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<number | null>(null);
 
   //Modal창 바깥 배경
   const customStyles = {
@@ -129,21 +129,20 @@ const ModalState = () => {
             </>
           )}
           <>
-            {modalLabels.map((label) => {
+            {modalLabels.map((label, index) => {
               // console.log(name);
               return (
                 <div
                   key={label.id}
                   className={styles.createdLabel}
-                  style={{ display: "flex" }}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
+                  onMouseEnter={() => setIsHovered(index)}
+                  onMouseLeave={() => setIsHovered(null)}
                 >
                   <div
                     className={`${styles.labelsIcon} material-icons`}
                     onClick={handleDeleteLabel}
                   >
-                    {isHovered ? "delete" : "label"}
+                    {isHovered === index ? "delete" : "label"}
                   </div>
                   <div className={styles.labelName}>{label.name}</div>
                   <div className={`${styles.labelsIcon} material-icons`}>
