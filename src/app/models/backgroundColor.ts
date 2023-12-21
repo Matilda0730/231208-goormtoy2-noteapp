@@ -1,4 +1,5 @@
 enum BackgroundColor {
+	RESET_ICON = "format_color_reset",
 	RED = "#77172E",
 	ORANGE = "#692B17",
 	YELLOW = "#7C4A03",
