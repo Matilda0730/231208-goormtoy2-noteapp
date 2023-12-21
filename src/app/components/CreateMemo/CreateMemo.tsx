@@ -105,14 +105,15 @@ const CreateMemo = () => {
 								>
 									palette
 								</div>
+
 								<div className={`material-symbols-outlined`}>archive</div>
 								<div className={`material-symbols-outlined`}>label</div>
 							</div>
-							<ColorModal />
 							<div className={styles.button_close} onClick={consoleLog}>
 								닫기
 							</div>
 						</div>
+						<ColorModal />
 					</div>
 				</>
 			) : (
