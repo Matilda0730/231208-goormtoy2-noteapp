@@ -3,6 +3,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ModalState {
+
 	isModalOpen: boolean;
 	isColorModalVisible: boolean;
 	isColorModalToggleVisible: boolean;
@@ -11,6 +12,7 @@ interface ModalState {
 
 const initialState: ModalState = {
 	isModalOpen: false,
+  isConfirmModalOpen: false,
 	isColorModalVisible: false,
 	isColorModalToggleVisible: false,
 	colorModalClose: false,
@@ -27,7 +29,12 @@ const modalSlice = createSlice({
 		handleCloseModal: (state) => {
 			state.isModalOpen = false;
 		},
-
+        handleOpenConfirmModal: (state) => {
+      state.isConfirmModalOpen = true;
+    },
+    handleCloseConfirmModal: (state) => {
+      state.isConfirmModalOpen = false;
+    },
 		toggleColorModal: (state) => {
 			state.isColorModalVisible = !state.isColorModalVisible;
 		},
@@ -44,6 +51,8 @@ const modalSlice = createSlice({
 export const {
 	handleOpenModal,
 	handleCloseModal,
+  handleOpenConfirmModal,
+  handleCloseConfirmModal,
 	toggleColorModal,
 	openAndCloseColorModal,
 	closeColorModal,

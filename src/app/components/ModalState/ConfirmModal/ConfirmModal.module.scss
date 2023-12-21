@@ -1,0 +1,66 @@
+@mixin flexCenter {
+  display: flex !important;
+  align-items: center !important;
+}
+
+@mixin flexCenterX2 {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.modal_container {
+  @include flexCenterX2();
+  flex-direction: column;
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: fit-content;
+  box-shadow: 0 0 10px black;
+  padding: 20px;
+  border-radius: 15px;
+  outline: none !important;
+  background-color: #313235;
+  color: white;
+}
+
+.text_space {
+  width: 100%;
+  height: 50px;
+}
+
+.btnSpace {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.closingBtn {
+  width: 80px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: transparent;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  width: 80px;
+  height: 40px;
+  border: none;
+  color: #8ab4f8;
+  background-color: transparent;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.closingBtn:hover {
+  background-color: #0000000f;
+}
+
+.deleteBtn:hover {
+  background-color: #7a81ff0f;
+}
