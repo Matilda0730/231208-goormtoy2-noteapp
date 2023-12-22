@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, ChangeEvent, MouseEvent } from "react";
 import styles from "./CreateMemo.module.scss";
 import ColorModal from "./ColorModal";
-import { toggleColorModal } from "reduxprops/features/modal/modalSlice";
+import { togglePaletteModal } from "reduxprops/features/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
+import MemoLabelModal from "./MemoLabelModal";
 
 const CreateMemo = () => {
-	const isModalVisible = useSelector((state: RootState) => state.modal.isColorModalVisible);
+	const isModalVisible = useSelector((state: RootState) => state.modal.paletteModalToggle);
 	const dispatch = useDispatch();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const createSpaceRef = useRef<HTMLDivElement>(null);
@@ -15,10 +16,16 @@ const CreateMemo = () => {
 	const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	// const [isModalVisible, setIsModalVisible] = useState(false);
+	const selectedColor = useSelector((state: RootState) => state.modal.modalBackgroundColor);
+
+	// `RESET_ICON` 키가 선택되었을 때의 기본 배경색
+	const defaultBackgroundColor = "#232427";
+
+	// 실제로 적용할 배경색을 결정
+	const backgroundColor = selectedColor ?? defaultBackgroundColor;
 
 	const handleToggleModal = () => {
-		dispatch(toggleColorModal());
+		dispatch(togglePaletteModal());
 	};
 
 	const handleMemoClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -46,7 +53,7 @@ const CreateMemo = () => {
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, []);
+	}, [isModalVisible]);
 
 	const handleChangeTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setTitle(event.target.value);
@@ -64,7 +71,10 @@ const CreateMemo = () => {
 
 	const handleClickOutside = (event: globalThis.MouseEvent) => {
 		if (createSpaceRef.current && !createSpaceRef.current.contains(event.target as Node)) {
-			setIsVisible(false);
+			setIsVisible(false); // CreateMemo 닫기
+			if (isModalVisible) {
+				dispatch(togglePaletteModal()); // ColorModal 닫기
+			}
 		}
 	};
 
@@ -76,6 +86,7 @@ const CreateMemo = () => {
 						className={styles.create_space_click}
 						onClick={handleMemoClick}
 						ref={createSpaceRef}
+						style={{ backgroundColor: backgroundColor }}
 					>
 						<form>
 							<div className={styles.create_title_container}>
@@ -85,6 +96,7 @@ const CreateMemo = () => {
 									placeholder="제목"
 									onChange={handleChangeTitle}
 									onClick={handleMemoClickHTML}
+									style={{ backgroundColor: backgroundColor }}
 								/>
 								<div className={`material-symbols-outlined`}>push_pin</div>
 							</div>
@@ -94,10 +106,14 @@ const CreateMemo = () => {
 								placeholder="메모 작성..."
 								onChange={handleChangeText}
 								onClick={handleMemoClickHTML}
+								style={{ backgroundColor: backgroundColor }}
 							/>
 						</form>
 						<div className={styles.button_and_close_container}>
-							<div className={styles.button_container}>
+							<div
+								className={styles.button_container}
+								style={{ backgroundColor: backgroundColor }}
+							>
 								<div className={`material-symbols-outlined`}>add_alert</div>
 								<div
 									className={`material-symbols-outlined`}
@@ -115,6 +131,7 @@ const CreateMemo = () => {
 							</div>
 						</div>
 						<ColorModal />
+						<MemoLabelModal />
 					</div>
 				</>
 			) : (
@@ -123,6 +140,7 @@ const CreateMemo = () => {
 						className={styles.create_space}
 						onClick={() => setIsVisible(!isVisible)}
 						ref={createSpaceRef}
+						style={{ backgroundColor: backgroundColor }}
 					>
 						<div className={styles.create_space_inner}>메모작성...</div>
 						<div className={`material-symbols-outlined`}>check_box</div>
