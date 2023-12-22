@@ -8,6 +8,9 @@ interface ModalState {
 	isColorModalVisible: boolean;
 	isColorModalToggleVisible: boolean;
 	colorModalClose: boolean;
+	isPaletteModalOpen: boolean;
+	paletteModalToggle: boolean;
+	modalBackgroundColor: string;
 }
 
 const initialState: ModalState = {
@@ -16,6 +19,9 @@ const initialState: ModalState = {
 	isColorModalVisible: false,
 	isColorModalToggleVisible: false,
 	colorModalClose: false,
+	isPaletteModalOpen: false,
+	paletteModalToggle: false,
+	modalBackgroundColor: "#232427",
 };
 
 const modalSlice = createSlice({
@@ -35,15 +41,13 @@ const modalSlice = createSlice({
 		handleCloseConfirmModal: (state) => {
 			state.isConfirmModalOpen = false;
 		},
-		toggleColorModal: (state) => {
-			state.isColorModalVisible = !state.isColorModalVisible;
+
+		togglePaletteModal: (state) => {
+			state.paletteModalToggle = !state.paletteModalToggle;
 		},
 
-		openAndCloseColorModal: (state, action) => {
-			state.isColorModalToggleVisible = action.payload;
-		},
-		closeColorModal: (state) => {
-			state.colorModalClose = false;
+		setBackgroundColor: (state, action: PayloadAction<string>) => {
+			state.modalBackgroundColor = action.payload;
 		},
 	},
 });
@@ -53,8 +57,7 @@ export const {
 	handleCloseModal,
 	handleOpenConfirmModal,
 	handleCloseConfirmModal,
-	toggleColorModal,
-	openAndCloseColorModal,
-	closeColorModal,
+	togglePaletteModal,
+	setBackgroundColor,
 } = modalSlice.actions;
 export default modalSlice.reducer;
