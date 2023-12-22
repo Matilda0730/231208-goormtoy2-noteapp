@@ -11,6 +11,7 @@ interface ModalState {
 	isPaletteModalOpen: boolean;
 	paletteModalToggle: boolean;
 	modalBackgroundColor: string;
+	memoLabelModalToggle: boolean;
 }
 
 const initialState: ModalState = {
@@ -22,6 +23,7 @@ const initialState: ModalState = {
 	isPaletteModalOpen: false,
 	paletteModalToggle: false,
 	modalBackgroundColor: "#232427",
+	memoLabelModalToggle: false,
 };
 
 const modalSlice = createSlice({
@@ -49,6 +51,10 @@ const modalSlice = createSlice({
 		setBackgroundColor: (state, action: PayloadAction<string>) => {
 			state.modalBackgroundColor = action.payload;
 		},
+
+		toggleMemoLabelModal: (state) => {
+			state.memoLabelModalToggle = !state.memoLabelModalToggle;
+		},
 	},
 });
 
@@ -59,5 +65,6 @@ export const {
 	handleCloseConfirmModal,
 	togglePaletteModal,
 	setBackgroundColor,
+	toggleMemoLabelModal,
 } = modalSlice.actions;
 export default modalSlice.reducer;
