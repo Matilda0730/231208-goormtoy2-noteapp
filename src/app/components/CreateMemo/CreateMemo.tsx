@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef, ChangeEvent, MouseEvent } from "react";
 import styles from "./CreateMemo.module.scss";
 import ColorModal from "./ColorModal";
-import { togglePaletteModal } from "reduxprops/features/modal/modalSlice";
+import { togglePaletteModal, toggleMemoLabelModal } from "reduxprops/features/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import MemoLabelModal from "./MemoLabelModal";
 
 const CreateMemo = () => {
 	const isModalVisible = useSelector((state: RootState) => state.modal.paletteModalToggle);
+	// const [isLabelModalVisible, setIsLabelModalVisible] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const createSpaceRef = useRef<HTMLDivElement>(null);
@@ -17,6 +18,13 @@ const CreateMemo = () => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const selectedColor = useSelector((state: RootState) => state.modal.modalBackgroundColor);
+
+	//"label" 아이콘을 클릭했을 때 isLabelModalVisible 상태를 토글하는 핸들러
+	const isLabelModalVisible = useSelector((state: RootState) => state.modal.memoLabelModalToggle);
+
+	const handleToggleLabelModal = () => {
+		dispatch(toggleMemoLabelModal());
+	};
 
 	// `RESET_ICON` 키가 선택되었을 때의 기본 배경색
 	const defaultBackgroundColor = "#232427";
@@ -28,13 +36,16 @@ const CreateMemo = () => {
 		dispatch(togglePaletteModal());
 	};
 
+	//안쪽 부분을 눌렀을 때 안 닫히게 하는 기능
 	const handleMemoClick = (event: MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
 	};
-
+	//안쪽 부분을 눌렀을 때 안 닫히게 하는 기능2
 	const handleMemoClickHTML = (event: MouseEvent<HTMLTextAreaElement>) => {
 		event.stopPropagation();
 	};
+
+	//textarea 입력하면 길어지는 기능
 
 	useEffect(() => {
 		const adjustHeight = (textarea: HTMLTextAreaElement | null) => {
@@ -48,6 +59,7 @@ const CreateMemo = () => {
 		adjustHeight(textareaRef.current);
 	}, [text]);
 
+	//modal window close
 	useEffect(() => {
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
@@ -63,12 +75,14 @@ const CreateMemo = () => {
 		setText(event.target.value);
 	};
 
+	//메모창 textarea에 입력한 거 콘솔로그에 띄우는 기능(title,text).닫기에 연결돼 있음
 	const consoleLog = () => {
 		console.log("Title:", title);
 		console.log("Text:", text);
 		setIsVisible(false);
 	};
 
+	//모달 바깥 클릭하면
 	const handleClickOutside = (event: globalThis.MouseEvent) => {
 		if (createSpaceRef.current && !createSpaceRef.current.contains(event.target as Node)) {
 			setIsVisible(false); // CreateMemo 닫기
@@ -124,14 +138,19 @@ const CreateMemo = () => {
 								</div>
 
 								<div className={`material-symbols-outlined`}>archive</div>
-								<div className={`material-symbols-outlined`}>label</div>
+								<div
+									className={`material-symbols-outlined`}
+									onClick={handleToggleLabelModal}
+								>
+									label
+								</div>
 							</div>
 							<div className={styles.button_close} onClick={consoleLog}>
 								닫기
 							</div>
 						</div>
 						<ColorModal />
-						<MemoLabelModal />
+						{isLabelModalVisible && <MemoLabelModal />}
 					</div>
 				</>
 			) : (
