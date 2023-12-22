@@ -12,12 +12,8 @@ interface SidebarState {
   items: SidebarItem[];
   selectedItem: string;
   newLabelSpace: SidebarItem[];
-  modalLabel: ModalLabel[];
-}
-interface ModalLabel {
-  name: string;
-  link: string;
-  id: string;
+  errorMessage: string | null;
+  labelToDelete: string | null;
 }
 
 const initialState: SidebarState = {
@@ -55,7 +51,8 @@ const initialState: SidebarState = {
   ],
   selectedItem: localStorage.getItem("selectedItemName") || "Keep",
   newLabelSpace: [],
-  modalLabel: [],
+  errorMessage: null,
+  labelToDelete: null,
 };
 
 const menuSlice = createSlice({
@@ -65,8 +62,13 @@ const menuSlice = createSlice({
     setSelectedItem: (state, action) => {
       state.selectedItem = action.payload;
     },
-    // : PayloadAction<string>
     setCreatedLabel: (state, action) => {
+      const newLabelName = action.payload;
+      if (state.newLabelSpace.some((label) => label.name === newLabelName)) {
+        state.errorMessage = "이미 존재하는 이름입니다.";
+        return;
+      }
+      state.errorMessage = null;
       const newLabel = {
         name: action.payload,
         iconName: "label",
@@ -88,20 +90,27 @@ const menuSlice = createSlice({
 
       state.items = updatedLabels;
     },
-    setNewLabelsOnModal: (state, action: PayloadAction<string>) => {
-      const newLabel: ModalLabel = {
-        name: action.payload,
-        link: action.payload,
-        id: action.payload,
-      };
-      state.modalLabel = [...state.modalLabel, newLabel].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
+    deleteLabel: (state, action) => {
+      state.newLabelSpace = state.newLabelSpace
+        .filter((label) => label.id !== action.payload)
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      state.items = [
+        ...state.items.slice(0, 2),
+        ...state.items.slice(2 + state.newLabelSpace.length),
+      ];
+
+      state.items = [
+        ...state.items.slice(0, 2),
+        ...state.newLabelSpace,
+        ...state.items.slice(2),
+      ];
     },
-    deleteLabelForBoth: (state, action: PayloadAction<string>) => {
-      state.modalLabel = state.modalLabel.filter(
-        (label) => label.name !== action.payload
-      );
+
+    setLabelToDelete: (state, action) => {
+      console.log("라벨 삭제 중:", action.payload);
+      state.labelToDelete = action.payload;
+      console.log("삭제 후 업데이트된 상태:", state);
     },
   },
 });
@@ -109,8 +118,8 @@ const menuSlice = createSlice({
 export const {
   setSelectedItem,
   setCreatedLabel,
-  setNewLabelsOnModal,
-  deleteLabelForBoth,
+  deleteLabel,
+  setLabelToDelete,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

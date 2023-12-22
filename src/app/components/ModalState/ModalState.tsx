@@ -9,46 +9,50 @@ import {
   handleOpenConfirmModal,
 } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
-import {
-  deleteLabelForBoth,
-  setCreatedLabel,
-  setNewLabelsOnModal,
-} from "@slice/menu/menuSlice";
+import { setCreatedLabel, setLabelToDelete } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 
-interface ModalTagStateProps {
-  defaultText: string;
-  hoverText: string;
-}
+// Modal.setAppElement("#__next"); // Next.js에서 사용되는 루트 요소의 ID를 설정
 
 const ModalState = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
-  const modalLabels = useSelector((state: RootState) => state.menu.modalLabel);
+  const modalLabels = useSelector(
+    (state: RootState) => state.menu.newLabelSpace
+  );
+  const errorMessage = useSelector(
+    (state: RootState) => state.menu.errorMessage
+  );
   const [labelName, setLabelName] = useState("");
   const [mode, setMode] = useState(true);
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  //라벨 추가 동작 함수
   const handleAddLabel = () => {
     if (!labelName) {
       return;
     }
     dispatch(setCreatedLabel(labelName));
-    dispatch(setNewLabelsOnModal(labelName));
-    setLabelName("");
+    inputRef.current?.focus();
   };
 
-  // const handleDeleteLabel = () => {
-  //   dispatch(deleteLabelForBoth(""));
-  // };
+  useEffect(() => {
+    if (errorMessage) {
+      setLabelName(labelName);
+    }
+    setLabelName("");
+  }, [modalLabels]);
 
+  //모달창 닫기
   const handleClose = () => {
     dispatch(handleCloseModal());
   };
-
-  const handleOpenConfirmModalOpen = () => {
+  //삭제 확인창 띄우기
+  const handleOpenConfirmModalOpen = (labelId: string) => {
     dispatch(handleOpenConfirmModal());
+    dispatch(setLabelToDelete(labelId));
   };
 
   //호버 시 쓰레기통으로 바꾸기
@@ -61,8 +65,6 @@ const ModalState = () => {
       zIndex: 100,
     },
   };
-
-  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -96,6 +98,11 @@ const ModalState = () => {
                     placeholder="새 라벨 만들기"
                     onChange={(e) => setLabelName(e.target.value)}
                     value={labelName}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        handleAddLabel();
+                      }
+                    }}
                   />
                   <div
                     className={`${styles.inputIcons} material-icons`}
@@ -107,6 +114,9 @@ const ModalState = () => {
                     done
                   </div>
                 </div>
+                {errorMessage && (
+                  <div className={styles.errorMessage}>{errorMessage}</div>
+                )}
               </>
             ) : (
               <>
@@ -139,7 +149,6 @@ const ModalState = () => {
             )}
             <>
               {modalLabels.map((label, index) => {
-                // console.log(name);
                 return (
                   <div
                     key={label.id}
@@ -150,8 +159,7 @@ const ModalState = () => {
                     <div
                       className={`${styles.labelsIcon} material-icons`}
                       onClick={() => {
-                        // handleDeleteLabel();
-                        handleOpenConfirmModalOpen();
+                        handleOpenConfirmModalOpen(label.id);
                       }}
                     >
                       {isHovered === index ? "delete" : "label"}
