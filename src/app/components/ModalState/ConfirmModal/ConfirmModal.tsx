@@ -4,14 +4,22 @@ import styles from "./ConfirmModal.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import { handleCloseConfirmModal } from "@slice/modal/modalSlice";
+import { deleteLabel } from "@slice/menu/menuSlice";
 
 const ConfirmModal = () => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const isConfirmModalOpen = useSelector(
     (state: RootState) => state.modal.isConfirmModalOpen
   );
   const handleCloseConfirmModalClose = () => {
+    dispatch(handleCloseConfirmModal());
+  };
+
+  const labelToDelete = useSelector(
+    (state: RootState) => state.menu.labelToDelete
+  );
+  const handleDeleteLabel = () => {
+    dispatch(deleteLabel(labelToDelete));
     dispatch(handleCloseConfirmModal());
   };
 
@@ -42,7 +50,9 @@ const ConfirmModal = () => {
           취소
         </button>
         <button
-          onClick={handleCloseConfirmModalClose}
+          onClick={() => {
+            handleDeleteLabel();
+          }}
           className={styles.deleteBtn}
         >
           삭제
