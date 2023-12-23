@@ -90,27 +90,17 @@ const menuSlice = createSlice({
 
       state.items = updatedLabels;
     },
-    deleteLabel: (state, action) => {
-      state.newLabelSpace = state.newLabelSpace
-        .filter((label) => label.id !== action.payload)
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      state.items = [
-        ...state.items.slice(0, 2),
-        ...state.items.slice(2 + state.newLabelSpace.length),
-      ];
-
-      state.items = [
-        ...state.items.slice(0, 2),
-        ...state.newLabelSpace,
-        ...state.items.slice(2),
-      ];
-    },
-
     setLabelToDelete: (state, action) => {
-      console.log("라벨 삭제 중:", action.payload);
-      state.labelToDelete = action.payload;
-      console.log("삭제 후 업데이트된 상태:", state);
+      state.newLabelSpace = state.newLabelSpace.filter(
+        (label) => label.id !== action.payload
+      );
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    },
+    setLabelToUpdate: (state, action) => {
+      const { index, labelName } = action.payload;
+      state.newLabelSpace = state.newLabelSpace.map((label, currentIndex) =>
+        currentIndex === index ? { ...label, name: labelName } : label
+      );
     },
   },
 });
@@ -118,8 +108,8 @@ const menuSlice = createSlice({
 export const {
   setSelectedItem,
   setCreatedLabel,
-  deleteLabel,
   setLabelToDelete,
+  setLabelToUpdate,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;
