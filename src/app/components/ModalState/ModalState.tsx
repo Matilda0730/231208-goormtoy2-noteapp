@@ -79,7 +79,7 @@ const ModalState = () => {
   };
 
   const handleEditLabel = (index: number) => {
-    dispatch(setLabelToUpdate(index, editingLabelName));
+    // dispatch(setLabelToUpdate(index, editingLabelName));
     // 예: dispatch(updateLabel(index, editingLabelName));
     setEditOn(null);
   };
