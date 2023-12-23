@@ -9,7 +9,11 @@ import {
   handleOpenConfirmModal,
 } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
-import { setCreatedLabel, setLabelToDelete } from "@slice/menu/menuSlice";
+import {
+  setCreatedLabel,
+  setLabelToDelete,
+  setLabelToUpdate,
+} from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 
 // Modal.setAppElement("#__next"); // Next.js에서 사용되는 루트 요소의 ID를 설정
@@ -37,7 +41,7 @@ const ModalState = () => {
     dispatch(setCreatedLabel(labelName));
     inputRef.current?.focus();
   };
-
+  //생성하려는 라벨이 이미 있는 이름이면 input value 없애지 않기.
   useEffect(() => {
     if (errorMessage) {
       setLabelName(labelName);
@@ -57,6 +61,28 @@ const ModalState = () => {
 
   //호버 시 쓰레기통으로 바꾸기
   const [isHovered, setIsHovered] = useState<number | null>(null);
+  //수정 버튼 누르면 div => input으로 바꾸기
+  const [editOn, setEditOn] = useState<number | null>(null);
+
+  const [editingLabelName, setEditingLabelName] = useState<string>("");
+
+  const handleToggleEdit = (index: number) => {
+    const label = modalLabels[index];
+    setEditOn((toggle) => (toggle === index ? null : index));
+    setEditingLabelName(label.name);
+  };
+
+  const handleEditInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setEditingLabelName(event.target.value);
+  };
+
+  const handleEditLabel = (index: number) => {
+    dispatch(setLabelToUpdate(index, editingLabelName));
+    // 예: dispatch(updateLabel(index, editingLabelName));
+    setEditOn(null);
+  };
 
   //Modal창 바깥 배경
   const customStyles = {
@@ -82,7 +108,7 @@ const ModalState = () => {
                 <div className={styles.modal_inputspace}>
                   <div
                     className={`${styles.inputIcons} material-icons`}
-                    style={{ userSelect: "none" }}
+                    // style={{ userSelect: "none" }}
                     onClick={() => {
                       setLabelName("");
                       setMode(false);
@@ -164,8 +190,24 @@ const ModalState = () => {
                     >
                       {isHovered === index ? "delete" : "label"}
                     </div>
-                    <div className={styles.labelName}>{label.name}</div>
-                    <div className={`${styles.labelsIcon} material-icons`}>
+                    {editOn === index ? (
+                      <input
+                        className={styles.inputToEdit}
+                        onChange={handleEditInputChange}
+                        value={editingLabelName}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            handleEditLabel(index);
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div className={styles.labelName}>{label.name}</div>
+                    )}
+                    <div
+                      className={`${styles.labelsIcon} material-icons`}
+                      onClick={() => handleToggleEdit(index)}
+                    >
                       edit
                     </div>
                   </div>

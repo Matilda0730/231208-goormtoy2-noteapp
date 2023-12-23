@@ -4,7 +4,7 @@ import styles from "./ConfirmModal.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import { handleCloseConfirmModal } from "@slice/modal/modalSlice";
-import { deleteLabel } from "@slice/menu/menuSlice";
+import { setLabelToDelete } from "@slice/menu/menuSlice";
 
 const ConfirmModal = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const ConfirmModal = () => {
     (state: RootState) => state.menu.labelToDelete
   );
   const handleDeleteLabel = () => {
-    dispatch(deleteLabel(labelToDelete));
+    dispatch(setLabelToDelete(labelToDelete));
     dispatch(handleCloseConfirmModal());
   };
 
