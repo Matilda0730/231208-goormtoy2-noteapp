@@ -12,11 +12,7 @@ import { RootState } from "reduxprops/store/store";
 
 export default function Home() {
   const [isNone, setIsNone] = useState(true);
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // const toggleSidebar = () => {
-  // 	setIsSidebarOpen(!isSidebarOpen);
-  // };
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector(
     (state: RootState) => state.sidebar.isSidebarOpen
@@ -30,7 +26,6 @@ export default function Home() {
           <div
             onClick={() => {
               dispatch(toggleSidebar());
-              console.log(isSidebarOpen);
             }}
             className={`${styles.first_icon} material-symbols-outlined`}
           >
