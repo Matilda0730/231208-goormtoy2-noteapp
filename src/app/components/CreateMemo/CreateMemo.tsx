@@ -98,7 +98,6 @@ const CreateMemo = () => {
 			setIsVisible(false); // CreateMemo 닫기
 			if (isModalVisible) {
 				dispatch(togglePaletteModal()); // ColorModal 닫기
-				dispatch(toggleMemoLabelModal()); //toggleMemoLabelModal 닫기
 			}
 		}
 	};
