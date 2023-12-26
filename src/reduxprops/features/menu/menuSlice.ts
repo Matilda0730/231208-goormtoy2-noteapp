@@ -28,25 +28,25 @@ const initialState: SidebarState = {
     {
       name: "알림",
       iconName: "notifications",
-      link: "/#/notification",
+      link: "/pages/notification",
       id: "notification",
     },
     {
       name: "라벨 수정",
       iconName: "edit",
-      link: "/#/",
+      link: "/pages/edit",
       id: "label",
     },
     {
       name: "보관처리",
       iconName: "archive",
-      link: "/#/archiveProcessing",
+      link: "/pages/archiveProcessing",
       id: "archiveProcessing",
     },
     {
       name: "휴지통",
       iconName: "delete",
-      link: "/#/trashCan",
+      link: "/pages/trashCan",
       id: "trashCan",
     },
   ],
@@ -54,7 +54,7 @@ const initialState: SidebarState = {
   newLabelSpace: [],
   errorMessage: null,
   labelToDelete: null,
-  selectedMenu: "메모",
+  selectedMenu: "/",
 };
 
 const menuSlice = createSlice({
@@ -74,7 +74,7 @@ const menuSlice = createSlice({
       const newLabel = {
         name: action.payload,
         iconName: "label",
-        link: `/#/label/${action.payload}`,
+        link: `/pages/label/${action.payload}`,
         id: action.payload,
       };
       state.items = [
@@ -103,7 +103,7 @@ const menuSlice = createSlice({
       state.items = state.items.filter((item) => item.id !== action.payload);
 
       const labelId = action.payload;
-      if (window.location.href.includes(`/#/label/${labelId}`)) {
+      if (window.location.href.includes(`/pages/label/${labelId}`)) {
         state.selectedMenu = "/";
         window.history.pushState(null, "", "/");
       }
