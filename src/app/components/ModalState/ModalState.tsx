@@ -79,12 +79,6 @@ const ModalState = () => {
     setEditingLabelName(event.target.value);
   };
 
-  const handleEditLabel = (index: number) => {
-    // dispatch(setLabelToUpdate(index, editingLabelName));
-    // 예: dispatch(updateLabel(index, editingLabelName));
-    setEditOn(null);
-  };
-
   //Modal창 바깥 배경
   const customStyles = {
     overlay: {
