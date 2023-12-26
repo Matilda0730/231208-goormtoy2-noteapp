@@ -13,6 +13,7 @@ import {
   setCreatedLabel,
   setLabelToDelete,
   setLabelToUpdate,
+  updateLabel,
 } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 
@@ -198,6 +199,18 @@ const ModalState = () => {
                         onKeyDown={(event) => {
                           if (event.key === "Enter") {
                             handleEditLabel(index);
+
+                            if (editOn === index) {
+                              dispatch(setLabelToUpdate(label));
+                              const editingLabel = {
+                                name: editingLabelName,
+                                iconName: "label",
+                                link: `/#/label/${editingLabelName}`,
+                                id: editingLabelName,
+                              };
+
+                              dispatch(updateLabel(editingLabel));
+                            }
                           }
                         }}
                       />
@@ -206,7 +219,20 @@ const ModalState = () => {
                     )}
                     <div
                       className={`${styles.labelsIcon} material-icons`}
-                      onClick={() => handleToggleEdit(index)}
+                      onClick={() => {
+                        handleToggleEdit(index);
+                        if (editOn === index) {
+                          dispatch(setLabelToUpdate(label));
+                          const editingLabel = {
+                            name: editingLabelName,
+                            iconName: "label",
+                            link: `/#/label/${editingLabelName}`,
+                            id: editingLabelName,
+                          };
+
+                          dispatch(updateLabel(editingLabel));
+                        }
+                      }}
                     >
                       edit
                     </div>

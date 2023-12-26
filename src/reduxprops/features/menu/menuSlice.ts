@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import styles from "../../../app/components/Sidebar/Sidebar.module.scss";
+import LabelItem from "app/models/labelItem";
 
 interface SidebarItem {
   name: string;
@@ -14,6 +15,7 @@ interface SidebarState {
   newLabelSpace: SidebarItem[];
   errorMessage: string | null;
   labelToDelete: string | null;
+  labelToEdit: LabelItem | null;
   selectedMenu: string | null;
 }
 
@@ -54,6 +56,7 @@ const initialState: SidebarState = {
   newLabelSpace: [],
   errorMessage: null,
   labelToDelete: null,
+  labelToEdit: null,
   selectedMenu: "메모",
 };
 
@@ -109,10 +112,28 @@ const menuSlice = createSlice({
       }
     },
     setLabelToUpdate: (state, action) => {
-      const { index, labelName } = action.payload;
-      state.newLabelSpace = state.newLabelSpace.map((label, currentIndex) =>
-        currentIndex === index ? { ...label, name: labelName } : label
-      );
+      const label = action.payload;
+      console.log(label);
+      state.labelToEdit = label;
+    },
+    updateLabel: (state, action) => {
+      const updatedLabel: SidebarItem = action.payload;
+      const originalLabel = state.labelToEdit;
+
+      state.newLabelSpace = state.newLabelSpace
+        .map((label) => {
+          return label.id === originalLabel!.id ? updatedLabel : label;
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      console.log(state.newLabelSpace.length);
+      const updatedLabels = [
+        ...state.items.slice(0, 2),
+        ...state.newLabelSpace,
+        ...state.items.slice(2 + state.newLabelSpace.length),
+      ];
+
+      state.items = updatedLabels;
     },
     setSelectedMenu: (state, action) => {
       state.selectedMenu = action.payload;
@@ -125,6 +146,7 @@ export const {
   setSelectedItem,
   setCreatedLabel,
   deleteLabel,
+  updateLabel,
   setLabelToDelete,
   setLabelToUpdate,
   setSelectedMenu,
