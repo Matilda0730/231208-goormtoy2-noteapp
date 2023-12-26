@@ -113,7 +113,6 @@ const menuSlice = createSlice({
     },
     setLabelToUpdate: (state, action) => {
       const label = action.payload;
-      console.log(label);
       state.labelToEdit = label;
     },
     updateLabel: (state, action) => {
@@ -126,7 +125,6 @@ const menuSlice = createSlice({
         })
         .sort((a, b) => a.name.localeCompare(b.name));
 
-      console.log(state.newLabelSpace.length);
       const updatedLabels = [
         ...state.items.slice(0, 2),
         ...state.newLabelSpace,
@@ -137,7 +135,6 @@ const menuSlice = createSlice({
     },
     setSelectedMenu: (state, action) => {
       state.selectedMenu = action.payload;
-      console.log(state.selectedMenu);
     },
   },
 });

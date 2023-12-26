@@ -80,7 +80,6 @@ const Sidebar = () => {
                 onClick={() => {
                   handleItemClick(page.name);
                   dispatch(setSelectedMenu(page.link));
-                  console.log(selectedMenuItem);
                 }}
               >
                 <div
