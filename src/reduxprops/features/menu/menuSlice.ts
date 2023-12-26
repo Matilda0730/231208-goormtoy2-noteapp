@@ -14,6 +14,7 @@ interface SidebarState {
   newLabelSpace: SidebarItem[];
   errorMessage: string | null;
   labelToDelete: string | null;
+  selectedMenu: string | null;
 }
 
 const initialState: SidebarState = {
@@ -53,6 +54,7 @@ const initialState: SidebarState = {
   newLabelSpace: [],
   errorMessage: null,
   labelToDelete: null,
+  selectedMenu: "메모",
 };
 
 const menuSlice = createSlice({
@@ -91,10 +93,20 @@ const menuSlice = createSlice({
       state.items = updatedLabels;
     },
     setLabelToDelete: (state, action) => {
+      const labelId = action.payload;
+      state.labelToDelete = labelId;
+    },
+    deleteLabel: (state, action) => {
       state.newLabelSpace = state.newLabelSpace.filter(
         (label) => label.id !== action.payload
       );
       state.items = state.items.filter((item) => item.id !== action.payload);
+
+      const labelId = action.payload;
+      if (window.location.href.includes(`/#/label/${labelId}`)) {
+        state.selectedMenu = "/";
+        window.history.pushState(null, "", "/");
+      }
     },
     setLabelToUpdate: (state, action) => {
       const { index, labelName } = action.payload;
@@ -102,14 +114,20 @@ const menuSlice = createSlice({
         currentIndex === index ? { ...label, name: labelName } : label
       );
     },
+    setSelectedMenu: (state, action) => {
+      state.selectedMenu = action.payload;
+      console.log(state.selectedMenu);
+    },
   },
 });
 
 export const {
   setSelectedItem,
   setCreatedLabel,
+  deleteLabel,
   setLabelToDelete,
   setLabelToUpdate,
+  setSelectedMenu,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

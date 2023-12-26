@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState, memo, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Sidebar.module.scss";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
 import ModalState from "@components/ModalState/ModalState";
 import { handleOpenModal } from "@slice/modal/modalSlice";
-import { setSelectedItem } from "@slice/menu/menuSlice";
+import { setSelectedItem, setSelectedMenu } from "@slice/menu/menuSlice";
 import { RootState } from "reduxprops/store/store";
 
 const Sidebar = () => {
@@ -43,8 +43,10 @@ const Sidebar = () => {
 
   const sidebarItems = useSelector((state: RootState) => state.menu.items);
 
-  //현재 있는 사이드바 메뉴 색 입히기
-  const [selectedMenu, setSelectedMenu] = useState<string>("memo");
+  // 현재 있는 사이드바 메뉴 색 입히기
+  const selectedMenuItem = useSelector(
+    (state: RootState) => state.menu.selectedMenu
+  );
 
   return (
     <div
@@ -73,11 +75,12 @@ const Sidebar = () => {
                 href={page.link}
                 key={page.id}
                 className={`${styles.sidebar_menu} ${
-                  selectedMenu === page.id ? styles.selected_menu : ""
+                  selectedMenuItem === page.link ? styles.selected_menu : ""
                 }`}
                 onClick={() => {
                   handleItemClick(page.name);
-                  setSelectedMenu(page.id);
+                  dispatch(setSelectedMenu(page.link));
+                  console.log(selectedMenuItem);
                 }}
               >
                 <div
