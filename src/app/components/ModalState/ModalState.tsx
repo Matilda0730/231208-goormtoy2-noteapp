@@ -205,7 +205,7 @@ const ModalState = () => {
                               const editingLabel = {
                                 name: editingLabelName,
                                 iconName: "label",
-                                link: `/#/label/${editingLabelName}`,
+                                link: `/pages/label/${editingLabelName}`,
                                 id: editingLabelName,
                               };
 
@@ -226,7 +226,7 @@ const ModalState = () => {
                           const editingLabel = {
                             name: editingLabelName,
                             iconName: "label",
-                            link: `/#/label/${editingLabelName}`,
+                            link: `/pages/label/${editingLabelName}`,
                             id: editingLabelName,
                           };
 
