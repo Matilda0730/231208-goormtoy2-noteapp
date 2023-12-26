@@ -17,6 +17,9 @@ interface SidebarState {
   labelToDelete: string | null;
   labelToEdit: LabelItem | null;
   selectedMenu: string | null;
+  mergeFlag: boolean;
+  mergeToExisted: string | null;
+  existedLabel: string | null;
 }
 
 const initialState: SidebarState = {
@@ -58,6 +61,9 @@ const initialState: SidebarState = {
   labelToDelete: null,
   labelToEdit: null,
   selectedMenu: "/",
+  mergeFlag: false,
+  mergeToExisted: null,
+  existedLabel: null,
 };
 
 const menuSlice = createSlice({
@@ -118,6 +124,20 @@ const menuSlice = createSlice({
     updateLabel: (state, action) => {
       const updatedLabel: SidebarItem = action.payload;
       const originalLabel = state.labelToEdit;
+
+      const existingLabel = state.newLabelSpace.find(
+        (label) => label.id === updatedLabel.id
+      );
+      if (existingLabel) {
+        state.mergeToExisted = updatedLabel.id;
+        state.existedLabel = existingLabel.id;
+        state.mergeFlag = true;
+
+        console.log(
+          `${originalLabel!.id}을 ${existingLabel.id}으로 병합 시도!`
+        );
+        return;
+      }
 
       state.newLabelSpace = state.newLabelSpace
         .map((label) => {
