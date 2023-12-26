@@ -36,7 +36,7 @@ const CreateMemo = () => {
 		dispatch(togglePaletteModal());
 	};
 
-	//안쪽 부분을 눌렀을 때 안 닫히게 하는 기능
+	//memo공간안쪽 부분을 눌렀을 때 안 닫히게 하는 기능
 	const handleMemoClick = (event: MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
 	};
