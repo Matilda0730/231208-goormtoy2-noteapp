@@ -55,6 +55,21 @@ const MemoLabelModal = () => {
 		(label) => label.name.toLowerCase() === labelSearch.toLowerCase()
 	);
 
+	//폼제출시 새로고침 방지용 + 라벨 없으면 생성해주기
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault(); // 폼 제출 시 새로고침 방지
+		const isLabelExists = existLabelSpace.some(
+			(label) => label.name.toLowerCase() === labelSearch.toLowerCase()
+		);
+
+		if (isLabelExists) {
+			// 같은 이름의 라벨이 있다면 해당 라벨을 검색해서 보여주기
+		} else {
+			// 같은 이름의 라벨이 없다면 새로운 라벨을 생성
+			dispatch(setCreatedLabel(labelSearch));
+		}
+	};
+
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
 			if (
@@ -99,7 +114,7 @@ const MemoLabelModal = () => {
 		>
 			<div>메모 라벨 지정</div>
 			<div className={styles.modal_name_container}>
-				<div className={styles.labelAndSearches_container}>
+				<form onSubmit={handleSubmit} className={styles.labelAndSearches_container}>
 					<input
 						type="text"
 						placeholder="라벨 이름 입력"
@@ -109,7 +124,7 @@ const MemoLabelModal = () => {
 					<span className="material-symbols-outlined icons" id={styles.search_icon}>
 						search
 					</span>
-				</div>
+				</form>
 				<div className={styles.label_container}>
 					{filteredLabels.map((label) => (
 						<div key={label.id} className={styles.label_item}>
