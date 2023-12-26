@@ -27,25 +27,25 @@ const initialState: SidebarState = {
     {
       name: "알림",
       iconName: "notifications",
-      link: "/notification",
+      link: "/#/notification",
       id: "notification",
     },
     {
       name: "라벨 수정",
       iconName: "edit",
-      link: "/",
+      link: "/#/",
       id: "label",
     },
     {
       name: "보관처리",
       iconName: "archive",
-      link: "/archiveProcessing",
+      link: "/#/archiveProcessing",
       id: "archiveProcessing",
     },
     {
       name: "휴지통",
       iconName: "delete",
-      link: "/trashCan",
+      link: "/#/trashCan",
       id: "trashCan",
     },
   ],
@@ -72,7 +72,7 @@ const menuSlice = createSlice({
       const newLabel = {
         name: action.payload,
         iconName: "label",
-        link: `/label/${action.payload}`,
+        link: `/#/label/${action.payload}`,
         id: action.payload,
       };
       state.items = [
