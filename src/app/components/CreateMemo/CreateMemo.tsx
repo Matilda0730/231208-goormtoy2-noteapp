@@ -16,10 +16,11 @@ const CreateMemo = () => {
 	const [title, setTitle] = useState<string>("");
 	const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	const memoLabelModalRef = useRef<HTMLDivElement>(null);
 
 	const selectedColor = useSelector((state: RootState) => state.modal.modalBackgroundColor);
 
-	//"label" 아이콘을 클릭했을 때 isLabelModalVisible 상태를 토글하는 핸들러
+	//"label" 아이콘을 클릭했을 때 isLabelModalVisible 상태를 토글하는 핸들러에 연결
 	const isLabelModalVisible = useSelector((state: RootState) => state.modal.memoLabelModalToggle);
 
 	const handleToggleLabelModal = () => {
@@ -44,6 +45,10 @@ const CreateMemo = () => {
 	const handleMemoClickHTML = (event: MouseEvent<HTMLTextAreaElement>) => {
 		event.stopPropagation();
 	};
+	//바깥으로 뺀 모달 클릭했을 때 안 닫히게 하는 기능 3
+	const handleModalClick = (event: React.MouseEvent) => {
+		event.stopPropagation(); // 상위 컴포넌트로의 이벤트 전파를 방지
+	};
 
 	//textarea 입력하면 길어지는 기능
 
@@ -59,7 +64,7 @@ const CreateMemo = () => {
 		adjustHeight(textareaRef.current);
 	}, [text]);
 
-	//modal window close
+	//Create memo modal window close
 	useEffect(() => {
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
@@ -84,10 +89,16 @@ const CreateMemo = () => {
 
 	//모달 바깥 클릭하면
 	const handleClickOutside = (event: globalThis.MouseEvent) => {
-		if (createSpaceRef.current && !createSpaceRef.current.contains(event.target as Node)) {
+		if (
+			createSpaceRef.current &&
+			!createSpaceRef.current.contains(event.target as Node) &&
+			(!memoLabelModalRef.current ||
+				!memoLabelModalRef.current.contains(event.target as Node))
+		) {
 			setIsVisible(false); // CreateMemo 닫기
 			if (isModalVisible) {
 				dispatch(togglePaletteModal()); // ColorModal 닫기
+				dispatch(toggleMemoLabelModal()); //toggleMemoLabelModal 닫기
 			}
 		}
 	};
@@ -150,8 +161,16 @@ const CreateMemo = () => {
 							</div>
 						</div>
 						<ColorModal />
-						{isLabelModalVisible && <MemoLabelModal />}
 					</div>
+					{isLabelModalVisible && (
+						<div
+							ref={memoLabelModalRef}
+							onClick={handleModalClick}
+							className={styles.labelModal_container}
+						>
+							{<MemoLabelModal />}
+						</div>
+					)}
 				</>
 			) : (
 				<>
