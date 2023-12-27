@@ -16,8 +16,12 @@ import {
   updateLabel,
 } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 const ModalState = () => {
+  const pathname = usePathname();
+  const { push } = useRouter();
+
   const dispatch = useDispatch();
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
@@ -28,9 +32,17 @@ const ModalState = () => {
   const errorMessage = useSelector(
     (state: RootState) => state.menu.errorMessage
   );
+
+  const labelToEdit = useSelector((state: RootState) => state.menu.labelToEdit);
   const [labelName, setLabelName] = useState("");
   const [mode, setMode] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
+  //호버 시 쓰레기통으로 바꾸기
+  const [isHovered, setIsHovered] = useState<number | null>(null);
+  //수정 버튼 누르면 div => input으로 바꾸기
+  const [editOn, setEditOn] = useState<number | null>(null);
+
+  const [editingLabelName, setEditingLabelName] = useState<string>("");
 
   //라벨 추가 동작 함수
   const handleAddLabel = () => {
@@ -48,6 +60,24 @@ const ModalState = () => {
     setLabelName("");
   }, [modalLabels]);
 
+  const handleEditInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setEditingLabelName(event.target.value);
+  };
+
+  const handleEditLabel = (index: number) => {
+    setEditOn(null);
+  };
+
+  const [temp, setTemp] = useState<string>("");
+
+  useEffect(() => {
+    if (temp && pathname === `/pages/label/${temp}`) {
+      push(`/pages/label/${editingLabelName}`);
+    }
+  }, [labelToEdit]);
+
   //모달창 닫기
   const handleClose = () => {
     dispatch(handleCloseModal());
@@ -58,28 +88,11 @@ const ModalState = () => {
     dispatch(setLabelToDelete(labelId));
   };
 
-  //호버 시 쓰레기통으로 바꾸기
-  const [isHovered, setIsHovered] = useState<number | null>(null);
-  //수정 버튼 누르면 div => input으로 바꾸기
-  const [editOn, setEditOn] = useState<number | null>(null);
-
-  const [editingLabelName, setEditingLabelName] = useState<string>("");
-
   const handleToggleEdit = (index: number) => {
     const label = modalLabels[index];
     setEditOn((toggle) => (toggle === index ? null : index));
     setEditingLabelName(label.name);
     setMode(false);
-  };
-
-  const handleEditInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setEditingLabelName(event.target.value);
-  };
-
-  const handleEditLabel = (index: number) => {
-    setEditOn(null);
   };
 
   //Modal창 바깥 배경
@@ -197,6 +210,7 @@ const ModalState = () => {
                         onKeyDown={(event) => {
                           if (event.key === "Enter") {
                             handleEditLabel(index);
+                            setTemp(label.name);
 
                             if (editOn === index) {
                               dispatch(setLabelToUpdate(label));
@@ -219,6 +233,8 @@ const ModalState = () => {
                       className={`${styles.labelsIcon} material-icons`}
                       onClick={() => {
                         handleToggleEdit(index);
+                        setTemp(label.name);
+
                         if (editOn === index) {
                           dispatch(setLabelToUpdate(label));
                           const editingLabel = {
@@ -229,6 +245,8 @@ const ModalState = () => {
                           };
 
                           dispatch(updateLabel(editingLabel));
+                          setEditingLabelName(editingLabelName);
+                          setEditOn(null);
                         }
                       }}
                     >
