@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import { toggleSidebar } from "@slice/sidebar/sidebarSlice";
 import { toggleIcon } from "@slice/navbar/navbarSlice";
+import { resetLabelDeleted } from "@slice/menu/menuSlice";
 
 const Navbar: React.FC = () => {
 	const navigate = useRouter();
-	const labelToDelete = useSelector((state: RootState) => state.menu.labelToDelete);
+	const labelDeleted = useSelector((state: RootState) => state.menu.labelDeleted);
 	const selectedItemName = useSelector((state: RootState) => state.menu.selectedItem);
 	const dispatch = useDispatch();
 	const icon = useSelector((state: RootState) => state.navbar.icon);
@@ -42,12 +43,15 @@ const Navbar: React.FC = () => {
 		return <p>Keep</p>;
 	};
 
-	// useEffect(() => {
-	// 	// 현재 경로가 삭제될 라벨의 경로와 일치하는지 확인
-	// 	if (labelToDelete && pathname === `/pages/label/${labelToDelete}`) {
-	// 		redirect("/"); // 삭제된 라벨 페이지에 있을 때 메인 페이지로 리디렉션
-	// 	}
-	// }, [labelToDelete, pathname]);
+	useEffect(() => {
+		if (labelDeleted) {
+			// 리디렉션 전에 상태 리셋
+			dispatch(resetLabelDeleted());
+
+			// 라벨이 삭제되었을 때 메인 페이지로 리디렉션
+			redirect("/");
+		}
+	}, [labelDeleted, dispatch]);
 
 	return (
 		<div className={styles.Navbar_container}>

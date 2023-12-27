@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef, ChangeEvent, MouseEvent } from "react";
 import styles from "./CreateMemo.module.scss";
 import ColorModal from "./ColorModal";
-import { togglePaletteModal, toggleMemoLabelModal } from "reduxprops/features/modal/modalSlice";
+import {
+	togglePaletteModal,
+	toggleMemoLabelModal,
+	CloseMemoLabelModal,
+} from "reduxprops/features/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import MemoLabelModal from "./MemoLabelModal";
@@ -17,6 +21,7 @@ const CreateMemo = () => {
 	const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const memoLabelModalRef = useRef<HTMLDivElement>(null);
+	const ColorModalRef = useRef<HTMLDivElement>(null);
 
 	const selectedColor = useSelector((state: RootState) => state.modal.modalBackgroundColor);
 
@@ -93,7 +98,8 @@ const CreateMemo = () => {
 			createSpaceRef.current &&
 			!createSpaceRef.current.contains(event.target as Node) &&
 			(!memoLabelModalRef.current ||
-				!memoLabelModalRef.current.contains(event.target as Node))
+				!memoLabelModalRef.current.contains(event.target as Node)) &&
+			(!ColorModalRef.current || !ColorModalRef.current.contains(event.target as Node))
 		) {
 			setIsVisible(false); // CreateMemo 닫기
 			if (isModalVisible) {
@@ -101,6 +107,13 @@ const CreateMemo = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (isVisible) {
+			// CreateMemo가 열릴 때 MemoLabelModal 상태를 false로 설정
+			dispatch(CloseMemoLabelModal(false));
+		}
+	}, [isVisible, dispatch]);
 
 	return (
 		<>
@@ -159,8 +172,11 @@ const CreateMemo = () => {
 								닫기
 							</div>
 						</div>
-						<ColorModal />
 					</div>
+					<div ref={ColorModalRef} onClick={handleModalClick}>
+						{<ColorModal />}
+					</div>
+
 					{isLabelModalVisible && (
 						<div
 							ref={memoLabelModalRef}
