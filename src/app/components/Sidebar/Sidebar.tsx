@@ -83,7 +83,9 @@ const Sidebar = () => {
                 }}
               >
                 <div
-                  className={`${styles.sidebar_icons} material-symbols-outlined`}
+                  className={`${
+                    selectedMenuItem === page.link ? styles.selected_menu : ""
+                  } ${styles.sidebar_icons} material-symbols-outlined`}
                 >
                   {page.iconName}
                 </div>
