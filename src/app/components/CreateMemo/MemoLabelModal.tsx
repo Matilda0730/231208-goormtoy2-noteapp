@@ -120,6 +120,7 @@ const MemoLabelModal = () => {
 						placeholder="라벨 이름 입력"
 						value={labelSearch}
 						onChange={handleLabelSearchChange}
+						className={styles.SearchInput}
 					/>
 					<span className="material-symbols-outlined icons" id={styles.search_icon}>
 						search

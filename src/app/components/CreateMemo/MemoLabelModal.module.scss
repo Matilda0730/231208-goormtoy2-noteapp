@@ -1,7 +1,9 @@
 .labelAndSearches_container {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #search_icon {
@@ -11,5 +13,10 @@
 
 .label_container {
 	margin-top: 10px;
-	background-color: #202124;
+}
+
+.SearchInput {
+	background-color: #232427;
+	border: none !important;
+	color: white;
 }
