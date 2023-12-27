@@ -18,7 +18,7 @@ import {
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 
 // Modal.setAppElement("#__next"); // Next.js에서 사용되는 루트 요소의 ID를 설정
-
+//
 const ModalState = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(
