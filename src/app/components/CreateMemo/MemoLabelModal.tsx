@@ -57,7 +57,7 @@ const MemoLabelModal = () => {
 
 	//폼제출시 새로고침 방지용 + 라벨 없으면 생성해주기
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault(); // 폼 제출 시 새로고침 방지
+		event.preventDefault();
 		const isLabelExists = existLabelSpace.some(
 			(label) => label.name.toLowerCase() === labelSearch.toLowerCase()
 		);
