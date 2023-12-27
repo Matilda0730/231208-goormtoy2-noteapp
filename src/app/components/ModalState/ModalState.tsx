@@ -174,7 +174,10 @@ const ModalState = () => {
                     type="text"
                     className={styles.input}
                     placeholder="새 라벨 만들기"
-                    onClick={() => setMode(true)}
+                    onClick={() => {
+                      setMode(true);
+                      setEditOn(null);
+                    }}
                   />
                   <div
                     className={`${styles.inputIcons} material-icons`}
@@ -204,6 +207,7 @@ const ModalState = () => {
                     </div>
                     {editOn === index ? (
                       <input
+                        autoFocus
                         className={styles.inputToEdit}
                         onChange={handleEditInputChange}
                         value={editingLabelName}
@@ -227,7 +231,25 @@ const ModalState = () => {
                         }}
                       />
                     ) : (
-                      <div className={styles.labelName}>{label.name}</div>
+                      <div
+                        className={styles.labelName}
+                        onClick={() => {
+                          handleToggleEdit(index);
+                          if (editOn === index) {
+                            dispatch(setLabelToUpdate(label));
+                            const editingLabel = {
+                              name: editingLabelName,
+                              iconName: "label",
+                              link: `/pages/label/${editingLabelName}`,
+                              id: editingLabelName,
+                            };
+
+                            dispatch(updateLabel(editingLabel));
+                          }
+                        }}
+                      >
+                        {label.name}
+                      </div>
                     )}
                     <div
                       className={`${styles.labelsIcon} material-icons`}
@@ -250,7 +272,7 @@ const ModalState = () => {
                         }
                       }}
                     >
-                      edit
+                      {editOn === index ? "done" : "edit"}
                     </div>
                   </div>
                 );
