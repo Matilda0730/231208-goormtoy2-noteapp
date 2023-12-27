@@ -36,6 +36,7 @@ const EditConfirmModal = () => {
       onRequestClose={handleCloseConfirmModalClose}
       className={styles.modal_container}
       style={customStyles}
+      ariaHideApp={false}
     >
       <div className={styles.text_space}>
         &lsquo;fasdf&rsquo; 라벨을 &lsquo;22&rsquo; 라벨과 병합하시겠습니까?

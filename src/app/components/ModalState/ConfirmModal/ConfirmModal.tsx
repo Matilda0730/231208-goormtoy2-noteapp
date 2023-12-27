@@ -36,6 +36,7 @@ const ConfirmModal = () => {
       onRequestClose={handleCloseConfirmModalClose}
       className={styles.modal_container}
       style={customStyles}
+      ariaHideApp={false}
     >
       <div className={styles.text_space}>
         이 라벨을 삭제하고 모든 Keep 메모에서 삭제합니다. 메모는 삭제되지

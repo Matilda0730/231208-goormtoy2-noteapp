@@ -17,8 +17,6 @@ import {
 } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 
-// Modal.setAppElement("#__next"); // Next.js에서 사용되는 루트 요소의 ID를 설정
-//
 const ModalState = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(
@@ -71,6 +69,7 @@ const ModalState = () => {
     const label = modalLabels[index];
     setEditOn((toggle) => (toggle === index ? null : index));
     setEditingLabelName(label.name);
+    setMode(false);
   };
 
   const handleEditInputChange = (
@@ -80,8 +79,6 @@ const ModalState = () => {
   };
 
   const handleEditLabel = (index: number) => {
-    // dispatch(setLabelToUpdate(index, editingLabelName));
-    // 예: dispatch(updateLabel(index, editingLabelName));
     setEditOn(null);
   };
 
@@ -100,6 +97,7 @@ const ModalState = () => {
         onRequestClose={handleClose}
         className={styles.modal_container}
         style={customStyles}
+        ariaHideApp={false}
       >
         <div className={styles.modal_space}>
           <div className={styles.modal_upperSpace}>
