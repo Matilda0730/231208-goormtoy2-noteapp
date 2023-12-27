@@ -56,7 +56,7 @@ const Sidebar = () => {
     >
       {sidebarItems.map((page) => {
         return (
-          <>
+          <React.Fragment key={page.id}>
             {page.iconName === "edit" ? (
               <div
                 key={page.id}
@@ -90,7 +90,7 @@ const Sidebar = () => {
                 <span>{page.name}</span>
               </Link>
             )}
-          </>
+          </React.Fragment>
         );
       })}
 
