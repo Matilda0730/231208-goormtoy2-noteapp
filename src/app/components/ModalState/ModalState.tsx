@@ -17,6 +17,7 @@ import {
 } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 import { redirect, usePathname, useRouter } from "next/navigation";
+import EditConfirmModal from "./EditConfirmModal/EditConfirmModal";
 
 const ModalState = () => {
   const pathname = usePathname();
@@ -120,7 +121,6 @@ const ModalState = () => {
                 <div className={styles.modal_inputspace}>
                   <div
                     className={`${styles.inputIcons} material-icons`}
-                    // style={{ userSelect: "none" }}
                     onClick={() => {
                       setLabelName("");
                       setMode(false);
@@ -222,9 +222,8 @@ const ModalState = () => {
                                 name: editingLabelName,
                                 iconName: "label",
                                 link: `/pages/label/${editingLabelName}`,
-                                id: editingLabelName,
+                                id: label.id,
                               };
-
                               dispatch(updateLabel(editingLabel));
                             }
                           }
@@ -235,17 +234,6 @@ const ModalState = () => {
                         className={styles.labelName}
                         onClick={() => {
                           handleToggleEdit(index);
-                          if (editOn === index) {
-                            dispatch(setLabelToUpdate(label));
-                            const editingLabel = {
-                              name: editingLabelName,
-                              iconName: "label",
-                              link: `/pages/label/${editingLabelName}`,
-                              id: editingLabelName,
-                            };
-
-                            dispatch(updateLabel(editingLabel));
-                          }
                         }}
                       >
                         {label.name}
@@ -256,14 +244,25 @@ const ModalState = () => {
                       onClick={() => {
                         handleToggleEdit(index);
                         setTemp(label.name);
+                        console.log("random");
 
                         if (editOn === index) {
                           dispatch(setLabelToUpdate(label));
+
+                          const existing = modalLabels.find(
+                            (l) => l.name === label.name
+                          );
+                          if (existing) {
+                            console.log("같은 이름");
+                          }
+                          console.log(existing);
+
+                          console.log(label.id);
                           const editingLabel = {
                             name: editingLabelName,
                             iconName: "label",
                             link: `/pages/label/${editingLabelName}`,
-                            id: editingLabelName,
+                            id: label.id,
                           };
 
                           dispatch(updateLabel(editingLabel));
@@ -287,6 +286,7 @@ const ModalState = () => {
         </div>
       </Modal>
       <ConfirmModal />
+      <EditConfirmModal />
     </>
   );
 };
