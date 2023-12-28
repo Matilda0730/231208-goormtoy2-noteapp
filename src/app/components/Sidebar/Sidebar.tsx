@@ -75,16 +75,16 @@ const Sidebar = () => {
                 href={page.link}
                 key={page.id}
                 className={`${styles.sidebar_menu} ${
-                  selectedMenuItem === page.link ? styles.selected_menu : ""
+                  selectedMenuItem === page.id ? styles.selected_menu : ""
                 }`}
                 onClick={() => {
                   handleItemClick(page.name);
-                  dispatch(setSelectedMenu(page.link));
+                  dispatch(setSelectedMenu(page.id));
                 }}
               >
                 <div
                   className={`${
-                    selectedMenuItem === page.link ? styles.selected_menu : ""
+                    selectedMenuItem === page.id ? styles.selected_menu : ""
                   } ${styles.sidebar_icons} material-symbols-outlined`}
                 >
                   {page.iconName}

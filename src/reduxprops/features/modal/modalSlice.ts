@@ -3,73 +3,82 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ModalState {
-	isModalOpen: boolean;
-	isConfirmModalOpen: boolean;
-	isColorModalVisible: boolean;
-	isColorModalToggleVisible: boolean;
-	colorModalClose: boolean;
-	isPaletteModalOpen: boolean;
-	paletteModalToggle: boolean;
-	modalBackgroundColor: string;
-	memoLabelModalToggle: boolean;
+  isModalOpen: boolean;
+  isConfirmModalOpen: boolean;
+  isConfirmEditModalOpen: boolean;
+  isColorModalVisible: boolean;
+  isColorModalToggleVisible: boolean;
+  colorModalClose: boolean;
+  isPaletteModalOpen: boolean;
+  paletteModalToggle: boolean;
+  modalBackgroundColor: string;
+  memoLabelModalToggle: boolean;
 }
 
 const initialState: ModalState = {
-	isModalOpen: false,
-	isConfirmModalOpen: false,
-	isColorModalVisible: false,
-	isColorModalToggleVisible: false,
-	colorModalClose: false,
-	isPaletteModalOpen: false,
-	paletteModalToggle: false,
-	modalBackgroundColor: "#202124",
-	memoLabelModalToggle: false,
+  isModalOpen: false,
+  isConfirmModalOpen: false,
+  isConfirmEditModalOpen: false,
+  isColorModalVisible: false,
+  isColorModalToggleVisible: false,
+  colorModalClose: false,
+  isPaletteModalOpen: false,
+  paletteModalToggle: false,
+  modalBackgroundColor: "#202124",
+  memoLabelModalToggle: false,
 };
 
 const modalSlice = createSlice({
-	name: "modal",
-	initialState,
-	reducers: {
-		handleOpenModal: (state) => {
-			state.isModalOpen = true;
-		},
+  name: "modal",
+  initialState,
+  reducers: {
+    handleOpenModal: (state) => {
+      state.isModalOpen = true;
+    },
 
-		handleCloseModal: (state) => {
-			state.isModalOpen = false;
-		},
-		handleOpenConfirmModal: (state) => {
-			state.isConfirmModalOpen = true;
-		},
-		handleCloseConfirmModal: (state) => {
-			state.isConfirmModalOpen = false;
-		},
+    handleCloseModal: (state) => {
+      state.isModalOpen = false;
+    },
+    handleOpenConfirmModal: (state) => {
+      state.isConfirmModalOpen = true;
+    },
+    handleCloseConfirmModal: (state) => {
+      state.isConfirmModalOpen = false;
+    },
+    handleOpenEditConfirmModal: (state) => {
+      state.isConfirmEditModalOpen = true;
+    },
+    handleCloseEditConfirmModal: (state) => {
+      state.isConfirmEditModalOpen = false;
+    },
+    togglePaletteModal: (state) => {
+      state.paletteModalToggle = !state.paletteModalToggle;
+    },
 
-		togglePaletteModal: (state) => {
-			state.paletteModalToggle = !state.paletteModalToggle;
-		},
+    setBackgroundColor: (state, action: PayloadAction<string>) => {
+      state.modalBackgroundColor = action.payload;
+    },
 
-		setBackgroundColor: (state, action: PayloadAction<string>) => {
-			state.modalBackgroundColor = action.payload;
-		},
+    toggleMemoLabelModal: (state) => {
+      state.memoLabelModalToggle = !state.memoLabelModalToggle;
+    },
 
-		toggleMemoLabelModal: (state) => {
-			state.memoLabelModalToggle = !state.memoLabelModalToggle;
-		},
-
-		CloseMemoLabelModal: (state, action: PayloadAction<boolean>) => {
-			state.memoLabelModalToggle = action.payload;
-		},
-	},
+    CloseMemoLabelModal: (state, action: PayloadAction<boolean>) => {
+      state.memoLabelModalToggle = action.payload;
+    },
+  },
 });
 
 export const {
-	handleOpenModal,
-	handleCloseModal,
-	handleOpenConfirmModal,
-	handleCloseConfirmModal,
-	togglePaletteModal,
-	setBackgroundColor,
-	toggleMemoLabelModal,
-	CloseMemoLabelModal,
+  handleOpenModal,
+  handleCloseModal,
+  handleOpenConfirmModal,
+  handleCloseConfirmModal,
+  handleOpenEditConfirmModal,
+  handleCloseEditConfirmModal,
+  togglePaletteModal,
+  setBackgroundColor,
+  toggleMemoLabelModal,
+  CloseMemoLabelModal,
 } = modalSlice.actions;
 export default modalSlice.reducer;

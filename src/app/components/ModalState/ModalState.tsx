@@ -7,16 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleCloseModal,
   handleOpenConfirmModal,
+  handleOpenEditConfirmModal,
 } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
 import {
   setCreatedLabel,
+  setExistedLabel,
   setLabelToDelete,
   setLabelToUpdate,
+  setMergeToExistedLabel,
   updateLabel,
 } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
 import { redirect, usePathname, useRouter } from "next/navigation";
+import EditConfirmModal from "./EditConfirmModal/EditConfirmModal";
 
 const ModalState = () => {
   const pathname = usePathname();
@@ -87,6 +91,10 @@ const ModalState = () => {
     dispatch(handleOpenConfirmModal());
     dispatch(setLabelToDelete(labelId));
   };
+  //a
+  const handleOpenEditConfirmModalOpen = () => {
+    dispatch(handleOpenEditConfirmModal());
+  };
 
   const handleToggleEdit = (index: number) => {
     const label = modalLabels[index];
@@ -120,7 +128,6 @@ const ModalState = () => {
                 <div className={styles.modal_inputspace}>
                   <div
                     className={`${styles.inputIcons} material-icons`}
-                    // style={{ userSelect: "none" }}
                     onClick={() => {
                       setLabelName("");
                       setMode(false);
@@ -218,13 +225,26 @@ const ModalState = () => {
 
                             if (editOn === index) {
                               dispatch(setLabelToUpdate(label));
+
+                              const existing = modalLabels.find(
+                                (l) =>
+                                  l.name === editingLabelName &&
+                                  l.id !== label.id
+                              );
+                              if (existing) {
+                                dispatch(setMergeToExistedLabel(label));
+                                dispatch(setExistedLabel(existing.name));
+                                handleOpenEditConfirmModalOpen();
+
+                                return;
+                              }
+
                               const editingLabel = {
                                 name: editingLabelName,
                                 iconName: "label",
                                 link: `/pages/label/${editingLabelName}`,
-                                id: editingLabelName,
+                                id: label.id,
                               };
-
                               dispatch(updateLabel(editingLabel));
                             }
                           }
@@ -235,17 +255,6 @@ const ModalState = () => {
                         className={styles.labelName}
                         onClick={() => {
                           handleToggleEdit(index);
-                          if (editOn === index) {
-                            dispatch(setLabelToUpdate(label));
-                            const editingLabel = {
-                              name: editingLabelName,
-                              iconName: "label",
-                              link: `/pages/label/${editingLabelName}`,
-                              id: editingLabelName,
-                            };
-
-                            dispatch(updateLabel(editingLabel));
-                          }
                         }}
                       >
                         {label.name}
@@ -259,11 +268,24 @@ const ModalState = () => {
 
                         if (editOn === index) {
                           dispatch(setLabelToUpdate(label));
+
+                          const existing = modalLabels.find(
+                            (l) =>
+                              l.name === editingLabelName && l.id !== label.id
+                          );
+
+                          if (existing) {
+                            dispatch(setMergeToExistedLabel(label));
+                            dispatch(setExistedLabel(existing.name));
+                            handleOpenEditConfirmModalOpen();
+                            return;
+                          }
+
                           const editingLabel = {
                             name: editingLabelName,
                             iconName: "label",
                             link: `/pages/label/${editingLabelName}`,
-                            id: editingLabelName,
+                            id: label.id,
                           };
 
                           dispatch(updateLabel(editingLabel));
@@ -287,6 +309,7 @@ const ModalState = () => {
         </div>
       </Modal>
       <ConfirmModal />
+      <EditConfirmModal />
     </>
   );
 };
