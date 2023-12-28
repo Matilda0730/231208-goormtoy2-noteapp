@@ -11,7 +11,6 @@ const ArchiveProcessing = () => {
   return (
     <div className={styles.pageBody}>
       <div className={styles.main_body}>
-        <CreateMemo />
         {isNone ? (
           <div className={styles.explanation}>
             <div className={`${styles.first_icon} material-symbols-outlined`}>
