@@ -87,9 +87,9 @@ const ModalState = () => {
     dispatch(handleCloseModal());
   };
   //삭제 확인창 띄우기
-  const handleOpenConfirmModalOpen = (labelId: string) => {
+  const handleOpenConfirmModalOpen = (labelName: string) => {
     dispatch(handleOpenConfirmModal());
-    dispatch(setLabelToDelete(labelId));
+    dispatch(setLabelToDelete(labelName));
   };
   //a
   const handleOpenEditConfirmModalOpen = () => {
@@ -207,7 +207,7 @@ const ModalState = () => {
                     <div
                       className={`${styles.labelsIcon} material-icons`}
                       onClick={() => {
-                        handleOpenConfirmModalOpen(label.id);
+                        handleOpenConfirmModalOpen(label.name);
                       }}
                     >
                       {isHovered === index ? "delete" : "label"}

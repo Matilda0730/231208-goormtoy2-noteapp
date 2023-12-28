@@ -46,7 +46,7 @@ const EditConfirmModal = () => {
         </button>
         <button
           onClick={() => {
-            dispatch(deleteLabel(mergeToExisted!.id));
+            dispatch(deleteLabel(mergeToExisted!.name));
             dispatch(handleCloseEditConfirmModal());
           }}
           className={styles.mergeBtn}

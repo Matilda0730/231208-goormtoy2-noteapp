@@ -109,12 +109,12 @@ const menuSlice = createSlice({
     },
     deleteLabel: (state, action) => {
       state.newLabelSpace = state.newLabelSpace.filter(
-        (label) => label.id !== action.payload
+        (label) => label.name !== action.payload
       );
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      state.items = state.items.filter((item) => item.name !== action.payload);
 
-      const labelId = action.payload;
-      if (labelId === state.selectedItem) {
+      const labelName = action.payload;
+      if (window.location.href.includes(labelName)) {
         state.selectedMenu = "memo";
         window.history.pushState(null, "", "/");
       }
