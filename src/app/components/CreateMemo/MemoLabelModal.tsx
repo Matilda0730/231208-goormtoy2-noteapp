@@ -131,10 +131,18 @@ const MemoLabelModal = () => {
 						<div key={label.id} className={styles.label_item}>
 							<input
 								type="checkbox"
+								id={`customCheckbox-${label.id}`}
 								checked={selectedLabels[label.id] || false}
 								onChange={() => handleCheckboxChange(label.id)}
+								className={styles.hidden_checkbox}
 							/>
-							{label.name}
+							<label
+								htmlFor={`customCheckbox-${label.id}`}
+								className={styles.custom_checkbox_label}
+							>
+								<span className={styles.custom_checkbox}></span>
+								{label.name}
+							</label>
 						</div>
 					))}
 					<div>

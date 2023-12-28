@@ -24,7 +24,7 @@ const initialState: ModalState = {
   colorModalClose: false,
   isPaletteModalOpen: false,
   paletteModalToggle: false,
-  modalBackgroundColor: "#232427",
+  modalBackgroundColor: "#202124",
   memoLabelModalToggle: false,
 };
 

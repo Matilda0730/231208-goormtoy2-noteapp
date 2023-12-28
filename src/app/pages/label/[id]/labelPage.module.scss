@@ -1,7 +1,41 @@
-.body {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 30px;
-  color: white;
+@mixin flexCenter {
+	display: flex;
+	align-items: center !important;
+}
+
+.pageBody {
+	display: flex;
+	width: 100vw;
+	height: 90vh;
+}
+
+//메인바디
+.main_body {
+	@include flexCenter();
+	flex-direction: column;
+	width: 100%;
+	transition: 0.5s;
+}
+
+.explanation {
+	@include flexCenter();
+	flex-direction: column;
+	justify-content: center !important;
+	height: 100%;
+}
+
+.first_icon {
+	font: {
+		size: 8rem !important;
+		weight: bold !important;
+	}
+	color: gray;
+}
+
+.first_text {
+	font: {
+		size: 1.5rem;
+	}
+	color: gray;
+	margin-top: 10px;
 }

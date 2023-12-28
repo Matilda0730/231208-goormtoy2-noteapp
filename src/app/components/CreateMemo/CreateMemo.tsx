@@ -5,6 +5,7 @@ import {
 	togglePaletteModal,
 	toggleMemoLabelModal,
 	CloseMemoLabelModal,
+	setBackgroundColor,
 } from "reduxprops/features/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
@@ -22,8 +23,7 @@ const CreateMemo = () => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const memoLabelModalRef = useRef<HTMLDivElement>(null);
 	const ColorModalRef = useRef<HTMLDivElement>(null);
-
-	const selectedColor = useSelector((state: RootState) => state.modal.modalBackgroundColor);
+	const defaultBackgroundColor = "#202124";
 
 	//"label" 아이콘을 클릭했을 때 isLabelModalVisible 상태를 토글하는 핸들러에 연결
 	const isLabelModalVisible = useSelector((state: RootState) => state.modal.memoLabelModalToggle);
@@ -32,11 +32,9 @@ const CreateMemo = () => {
 		dispatch(toggleMemoLabelModal());
 	};
 
-	// `RESET_ICON` 키가 선택되었을 때의 기본 배경색
-	const defaultBackgroundColor = "#232427";
-
 	// 실제로 적용할 배경색을 결정
-	const backgroundColor = selectedColor ?? defaultBackgroundColor;
+	const backgroundColor = useSelector((state: RootState) => state.modal.modalBackgroundColor);
+	const defaultColor = "#202124"; // 초기 색상
 
 	const handleToggleModal = () => {
 		dispatch(togglePaletteModal());
@@ -115,6 +113,13 @@ const CreateMemo = () => {
 		}
 	}, [isVisible, dispatch]);
 
+	// CreateMemo가 닫힐 때 배경색을 리셋하는 useEffect
+	useEffect(() => {
+		if (!isVisible) {
+			dispatch(setBackgroundColor(defaultBackgroundColor));
+		}
+	}, [isVisible, dispatch]);
+
 	return (
 		<>
 			{isVisible ? (
@@ -123,7 +128,7 @@ const CreateMemo = () => {
 						className={styles.create_space_click}
 						onClick={handleMemoClick}
 						ref={createSpaceRef}
-						style={{ backgroundColor: backgroundColor }}
+						style={{ backgroundColor: backgroundColor || defaultColor }}
 					>
 						<form>
 							<div className={styles.create_title_container}>
@@ -133,7 +138,7 @@ const CreateMemo = () => {
 									placeholder="제목"
 									onChange={handleChangeTitle}
 									onClick={handleMemoClickHTML}
-									style={{ backgroundColor: backgroundColor }}
+									style={{ backgroundColor: backgroundColor || defaultColor }}
 								/>
 								<div className={`material-symbols-outlined`}>push_pin</div>
 							</div>
@@ -143,13 +148,13 @@ const CreateMemo = () => {
 								placeholder="메모 작성..."
 								onChange={handleChangeText}
 								onClick={handleMemoClickHTML}
-								style={{ backgroundColor: backgroundColor }}
+								style={{ backgroundColor: backgroundColor || defaultColor }}
 							/>
 						</form>
 						<div className={styles.button_and_close_container}>
 							<div
 								className={styles.button_container}
-								style={{ backgroundColor: backgroundColor }}
+								style={{ backgroundColor: backgroundColor || defaultColor }}
 							>
 								<div className={`material-symbols-outlined`}>add_alert</div>
 								<div
@@ -193,7 +198,7 @@ const CreateMemo = () => {
 						className={styles.create_space}
 						onClick={() => setIsVisible(!isVisible)}
 						ref={createSpaceRef}
-						style={{ backgroundColor: backgroundColor }}
+						style={{ backgroundColor: defaultColor }}
 					>
 						<div className={styles.create_space_inner}>메모작성...</div>
 						<div className={`material-symbols-outlined`}>check_box</div>
