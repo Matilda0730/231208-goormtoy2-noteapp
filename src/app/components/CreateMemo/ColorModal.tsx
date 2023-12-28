@@ -15,14 +15,13 @@ const ColorModal: React.FC = () => {
 		event.stopPropagation(); // 버블링 중지
 	};
 
+	// 색상 물어보고 초기 색상으로 설정
 	const handleColorClick = (color: string, event: React.MouseEvent) => {
 		event.stopPropagation();
-		if (color === selectedColor) {
-			setSelectedColor(null);
-		} else {
-			setSelectedColor(color);
-			dispatch(setBackgroundColor(color));
-		}
+		// "format_color_reset" 아이콘이 클릭되면 "#202124"로 배경색을 설정
+		const colorValue = color === "format_color_reset" ? "#202124" : color;
+		setSelectedColor(colorValue);
+		dispatch(setBackgroundColor(colorValue));
 	};
 
 	//▼onRequestClose를 직접 구현
@@ -69,7 +68,8 @@ const ColorModal: React.FC = () => {
 			<div className={styles.modal_container}>
 				{Object.entries(BackgroundColor).map(([key, value], index) => {
 					if (key === "RESET_ICON") {
-						const isResetSelected = selectedColor === value;
+						// selectedColor가 "format_color_reset"과 동일한지 확인
+						const isResetSelected = selectedColor === "format_color_reset";
 						const resetIconClass = isResetSelected
 							? styles.selectedColorOption
 							: styles.color_option;
@@ -79,7 +79,7 @@ const ColorModal: React.FC = () => {
 								className={`material-symbols-outlined ${resetIconClass}`}
 								key={index}
 								onClick={(e) => handleColorClick(value, e)}
-								style={{ color: "white" }}
+								style={{ color: isResetSelected ? "white" : "white" }} // 여기서 white 색상을 설정합니다.
 							>
 								format_color_reset
 								{isResetSelected && (
