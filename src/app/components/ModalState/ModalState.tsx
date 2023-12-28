@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleCloseModal,
   handleOpenConfirmModal,
+  handleOpenEditConfirmModal,
 } from "reduxprops/features/modal/modalSlice";
 import { RootState } from "reduxprops/store/store";
 import {
   setCreatedLabel,
+  setExistedLabel,
   setLabelToDelete,
   setLabelToUpdate,
+  setMergeToExistedLabel,
   updateLabel,
 } from "@slice/menu/menuSlice";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
@@ -87,6 +90,10 @@ const ModalState = () => {
   const handleOpenConfirmModalOpen = (labelId: string) => {
     dispatch(handleOpenConfirmModal());
     dispatch(setLabelToDelete(labelId));
+  };
+  //a
+  const handleOpenEditConfirmModalOpen = () => {
+    dispatch(handleOpenEditConfirmModal());
   };
 
   const handleToggleEdit = (index: number) => {
@@ -218,6 +225,20 @@ const ModalState = () => {
 
                             if (editOn === index) {
                               dispatch(setLabelToUpdate(label));
+
+                              const existing = modalLabels.find(
+                                (l) =>
+                                  l.name === editingLabelName &&
+                                  l.id !== label.id
+                              );
+                              if (existing) {
+                                dispatch(setMergeToExistedLabel(label));
+                                dispatch(setExistedLabel(existing.name));
+                                handleOpenEditConfirmModalOpen();
+
+                                return;
+                              }
+
                               const editingLabel = {
                                 name: editingLabelName,
                                 iconName: "label",
@@ -244,20 +265,22 @@ const ModalState = () => {
                       onClick={() => {
                         handleToggleEdit(index);
                         setTemp(label.name);
-                        console.log("random");
 
                         if (editOn === index) {
                           dispatch(setLabelToUpdate(label));
 
                           const existing = modalLabels.find(
-                            (l) => l.name === label.name
+                            (l) =>
+                              l.name === editingLabelName && l.id !== label.id
                           );
-                          if (existing) {
-                            console.log("같은 이름");
-                          }
-                          console.log(existing);
 
-                          console.log(label.id);
+                          if (existing) {
+                            dispatch(setMergeToExistedLabel(label));
+                            dispatch(setExistedLabel(existing.name));
+                            handleOpenEditConfirmModalOpen();
+                            return;
+                          }
+
                           const editingLabel = {
                             name: editingLabelName,
                             iconName: "label",

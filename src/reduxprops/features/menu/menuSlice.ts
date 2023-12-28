@@ -18,7 +18,7 @@ interface SidebarState {
   labelToEdit: LabelItem | null;
   selectedMenu: string | null;
   mergeFlag: boolean;
-  mergeToExisted: string | null;
+  mergeToExisted: LabelItem | null;
   existedLabel: string | null;
   labelDeleted: boolean;
 }
@@ -61,7 +61,7 @@ const initialState: SidebarState = {
   errorMessage: null,
   labelToDelete: null,
   labelToEdit: null,
-  selectedMenu: null,
+  selectedMenu: "memo",
   mergeFlag: false,
   mergeToExisted: null,
   existedLabel: null,
@@ -112,9 +112,9 @@ const menuSlice = createSlice({
         (label) => label.id !== action.payload
       );
       state.items = state.items.filter((item) => item.id !== action.payload);
-      const labelName = action.payload;
 
-      if (labelName === action.payload) {
+      const labelId = action.payload;
+      if (labelId === state.selectedItem) {
         state.selectedMenu = "memo";
         window.history.pushState(null, "", "/");
       }
@@ -132,18 +132,6 @@ const menuSlice = createSlice({
         (label) =>
           label.name === updatedLabel.name && label.id !== originalLabel?.id
       );
-      // if (existingLabel) {
-      //   state.mergeToExisted = updatedLabel.name;
-      //   state.existedLabel = existingLabel!.name;
-      //   state.mergeFlag = true;
-
-      //   console.log(
-      //     `${originalLabel!.name}을 ${existingLabel!.name}으로 병합 시도!`
-      //   );
-      //   handleOpenEditConfirmModal();
-      //   return;
-      // }
-
       state.newLabelSpace = state.newLabelSpace
         .map((label) => {
           return label.name === originalLabel!.name ? updatedLabel : label;
@@ -157,6 +145,12 @@ const menuSlice = createSlice({
       ];
 
       state.items = updatedLabels;
+    },
+    setMergeToExistedLabel: (state, action) => {
+      state.mergeToExisted = action.payload;
+    },
+    setExistedLabel: (state, action) => {
+      state.existedLabel = action.payload;
     },
     setSelectedMenu: (state, action) => {
       state.selectedMenu = action.payload;
@@ -174,6 +168,8 @@ export const {
   updateLabel,
   setLabelToDelete,
   setLabelToUpdate,
+  setMergeToExistedLabel,
+  setExistedLabel,
   setSelectedMenu,
   resetLabelDeleted,
 } = menuSlice.actions;
