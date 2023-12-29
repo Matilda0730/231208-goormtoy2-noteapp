@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useRef, ChangeEvent, MouseEvent } from "react";
 import styles from "./CreateMemo.module.scss";
 import ColorModal from "./ColorModal";
@@ -10,6 +11,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import MemoLabelModal from "./MemoLabelModal";
+import { addNote } from "reduxprops/features/memo/notesSlice";
+import { Note } from "app/models/note";
+import BackgroundColor from "app/models/backgroundColor";
+import { v4 as uuidv4 } from "uuid";
 
 const CreateMemo = () => {
 	const isModalVisible = useSelector((state: RootState) => state.modal.paletteModalToggle);
@@ -24,7 +29,9 @@ const CreateMemo = () => {
 	const memoLabelModalRef = useRef<HTMLDivElement>(null);
 	const ColorModalRef = useRef<HTMLDivElement>(null);
 	const defaultBackgroundColor = "#202124";
-
+	const currentBackgroundColor = useSelector(
+		(state: RootState) => state.modal.modalBackgroundColor
+	);
 	//"label" 아이콘을 클릭했을 때 isLabelModalVisible 상태를 토글하는 핸들러에 연결
 	const isLabelModalVisible = useSelector((state: RootState) => state.modal.memoLabelModalToggle);
 
@@ -83,11 +90,27 @@ const CreateMemo = () => {
 		setText(event.target.value);
 	};
 
-	//메모창 textarea에 입력한 거 콘솔로그에 띄우는 기능(title,text).닫기에 연결돼 있음
-	const consoleLog = () => {
-		console.log("Title:", title);
-		console.log("Text:", text);
+	//메모창 textarea에 입력한 거 (title,text) 메모 생성 .닫기에 연결돼 있음
+	const createMemoAndSetTitleText = () => {
+		const currentTime = new Date().getTime();
+
+		const newNote: Note = {
+			id: uuidv4(),
+			title: title,
+			text: text,
+			tags: null,
+			backgroundColor: currentBackgroundColor,
+			isPinned: false,
+			isRead: false,
+			createdTime: currentTime,
+			editedTime: null,
+		};
+
+		dispatch(addNote(newNote));
+
 		setIsVisible(false);
+		setTitle(""); // 제목 초기화
+		setText(""); // 내용 초기화
 	};
 
 	//모달 바깥 클릭하면
@@ -173,7 +196,10 @@ const CreateMemo = () => {
 									label
 								</div>
 							</div>
-							<div className={styles.button_close} onClick={consoleLog}>
+							<div
+								className={styles.button_close}
+								onClick={createMemoAndSetTitleText}
+							>
 								닫기
 							</div>
 						</div>

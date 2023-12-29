@@ -107,11 +107,7 @@ const MemoLabelModal = () => {
 	};
 
 	return (
-		<div
-			onClick={handleModalContainerClick}
-			className={styles.labelModal_container}
-			ref={modalRef}
-		>
+		<div onClick={handleModalContainerClick} ref={modalRef}>
 			<div>메모 라벨 지정</div>
 			<div className={styles.modal_name_container}>
 				<form onSubmit={handleSubmit} className={styles.labelAndSearches_container}>
@@ -147,12 +143,7 @@ const MemoLabelModal = () => {
 					))}
 					<div>
 						{showCreateLabelButton && (
-							<div
-								onClick={handleCreateNewLabel}
-								className={styles.create_label_button}
-							>
-								{labelSearch} 라벨 만들기
-							</div>
+							<div onClick={handleCreateNewLabel}>{labelSearch} 라벨 만들기</div>
 						)}
 					</div>
 				</div>
