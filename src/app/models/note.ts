@@ -1,16 +1,18 @@
 import BackgroundColor from "./backgroundColor";
 import { Tag } from "./tag";
 
-interface Note {
+export interface Note {
 	title: string;
-	content: string;
-	tags: Tag[];
-	backgroundcolor: BackgroundColor;
-	priority: string;
+	text: string;
+	tags: Tag[] | null;
+	backgroundColor: string;
 	isPinned: boolean;
 	isRead: boolean;
-	date: string;
 	createdTime: number;
-	editedTime: null | number;
+	editedTime: number | null;
 	id: string;
+}
+
+export interface NotesState {
+	notes: Note[];
 }
