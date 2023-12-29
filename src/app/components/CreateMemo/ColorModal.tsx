@@ -16,13 +16,22 @@ const ColorModal: React.FC = () => {
 	};
 
 	// 색상 물어보고 초기 색상으로 설정
+
 	const handleColorClick = (color: string, event: React.MouseEvent) => {
 		event.stopPropagation();
-		// "format_color_reset" 아이콘이 클릭되면 "#202124"로 배경색을 설정
-		const colorValue = color === "format_color_reset" ? "#202124" : color;
+		// "format_color_reset" 아이콘이 클릭되면 selectedColor를 null로 설정
+		const colorValue = color === "format_color_reset" ? null : color;
 		setSelectedColor(colorValue);
-		dispatch(setBackgroundColor(colorValue));
+		// 배경색 "format_color_reset"인 경우 기본 색상
+		const backgroundColor = color === "format_color_reset" ? "#202124" : color;
+		dispatch(setBackgroundColor(backgroundColor));
 	};
+
+	useEffect(() => {
+		if (isModalVisible) {
+			setSelectedColor("format_color_reset");
+		}
+	}, [isModalVisible]);
 
 	//▼onRequestClose를 직접 구현
 	const handleCloseFromOutside = () => {
@@ -79,7 +88,7 @@ const ColorModal: React.FC = () => {
 								className={`material-symbols-outlined ${resetIconClass}`}
 								key={index}
 								onClick={(e) => handleColorClick(value, e)}
-								style={{ color: isResetSelected ? "white" : "white" }} // 여기서 white 색상을 설정합니다.
+								style={{ color: "white" }}
 							>
 								format_color_reset
 								{isResetSelected && (
