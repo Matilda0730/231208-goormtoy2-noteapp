@@ -233,7 +233,7 @@ const ModalState = () => {
                               );
                               if (existing) {
                                 dispatch(setMergeToExistedLabel(label));
-                                dispatch(setExistedLabel(existing.name));
+                                dispatch(setExistedLabel(existing));
                                 handleOpenEditConfirmModalOpen();
 
                                 return;
@@ -276,7 +276,7 @@ const ModalState = () => {
 
                           if (existing) {
                             dispatch(setMergeToExistedLabel(label));
-                            dispatch(setExistedLabel(existing.name));
+                            dispatch(setExistedLabel(existing));
                             handleOpenEditConfirmModalOpen();
                             return;
                           }
