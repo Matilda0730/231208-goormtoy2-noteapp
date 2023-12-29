@@ -19,7 +19,8 @@ interface SidebarState {
   selectedMenu: string | null;
   mergeFlag: boolean;
   mergeToExisted: LabelItem | null;
-  existedLabel: string | null;
+  // existedLabel: string | null;
+  existedLabel: LabelItem | null;
   labelDeleted: boolean;
 }
 
@@ -158,6 +159,9 @@ const menuSlice = createSlice({
     resetLabelDeleted: (state) => {
       state.labelDeleted = false;
     },
+    setMergeFlag: (state, action) => {
+      state.mergeFlag = action.payload;
+    },
   },
 });
 
@@ -172,6 +176,7 @@ export const {
   setExistedLabel,
   setSelectedMenu,
   resetLabelDeleted,
+  setMergeFlag,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;
