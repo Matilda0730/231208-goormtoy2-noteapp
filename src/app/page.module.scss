@@ -3,12 +3,6 @@
   align-items: center !important;
 }
 
-.pageBody {
-  display: flex;
-  width: 100vw;
-  height: 100%;
-}
-
 //메인바디
 .main_body {
   @include flexCenter();
@@ -17,27 +11,4 @@
   transition: 0.5s;
   padding: 20px;
   padding-left: 100px;
-}
-
-.explanation {
-  @include flexCenter();
-  flex-direction: column;
-  justify-content: center !important;
-  height: 100%;
-}
-
-.first_icon {
-  font: {
-    size: 8rem !important;
-    weight: bold !important;
-  }
-  color: #37383a !important;
-}
-
-.first_text {
-  font: {
-    size: 1.5rem;
-  }
-  color: gray;
-  margin-top: 10px;
 }
