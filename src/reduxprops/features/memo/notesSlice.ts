@@ -18,7 +18,7 @@ const notesSlice = createSlice({
     moveToTrashCan: (state, action) => {
       state.trashCan.push(action.payload);
       state.notes = state.notes.filter((note) => note.id !== action.payload.id);
-      state.archiveList = state.notes.filter(
+      state.archiveList = state.archiveList.filter(
         (note) => note.id !== action.payload.id
       );
     },

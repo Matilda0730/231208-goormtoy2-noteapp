@@ -26,13 +26,13 @@
 }
 
 .sidebar_space:hover {
-  width: 300px !important;
-  transition: 0.3s;
+  width: 370px !important;
 }
 
 .toggle_sidebar {
-  width: 300px !important;
-  transition: 0.3s;
+  width: 370px !important;
+  padding-right: 3px;
+  box-shadow: 0 0 10px #1a1a1a;
 }
 
 .sidebar_menu {
@@ -86,7 +86,7 @@
 
 .sidebar_icons {
   @include flexCenter();
-  justify-content: left !important;
+  justify-content: center;
   width: 25px;
   height: 25px;
   padding: {
@@ -97,4 +97,18 @@
   font-size: 25px !important;
   margin-right: 15px;
   color: rgb(150, 150, 150);
+}
+
+.license {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #9aa0a6;
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.sidebar_space:hover .license,
+.toggle_sidebar .license {
+  visibility: visible !important;
 }
