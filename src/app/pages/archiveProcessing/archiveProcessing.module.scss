@@ -10,8 +10,8 @@
 }
 
 .main_body {
-  @include flexCenter();
-  flex-direction: column;
+  display: flex;
+  // flex-direction: column;
   width: 100%;
   transition: 0.5s;
   padding: 20px;
@@ -23,7 +23,6 @@
   flex-direction: column;
   justify-content: center !important;
   width: 100%;
-  // height: 77vh;
   z-index: -1;
 }
 
@@ -41,4 +40,80 @@
   }
   color: gray;
   margin-top: 10px;
+}
+///////////////
+.memo_space {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.memoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // width: 180px;
+  min-width: 180px;
+  max-width: 250px;
+  height: fit-content;
+  min-height: 100px;
+  padding: 5px;
+  border: 1px solid #5f6368;
+  border-radius: 10px;
+  margin: 10px;
+
+  transition: 0.3s;
+}
+
+.memoContainer:hover {
+  border-color: #a0a0a0;
+}
+
+.memo {
+  position: relative;
+  color: white;
+  padding: 15px;
+  padding-right: 40px;
+  height: fit-content;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+#push_pin {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  opacity: 0;
+}
+
+.memoButton_space {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.memoContainer:hover .memoButton_space,
+.memoContainer:hover #push_pin {
+  opacity: 1;
+}
+
+#bottom_icons,
+#push_pin {
+  @include flexCenterX2;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #bebfbf;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#bottom_icons:hover,
+#push_pin:hover {
+  background-color: #494949;
+  color: white;
 }

@@ -8,16 +8,16 @@ import notesListReducer from "reduxprops/features/memo/notesSlice";
 // import tagsReducer from "../redux/features/tags/tagsSlice";
 
 export const store = configureStore({
-	reducer: {
-		menu: menuReducer,
-		auth: authReducer,
-		navbar: navbarReducer,
-		sidebar: sidebarReducer,
-		modal: modalReducer,
-		notes: notesListReducer,
-		// tags: tagsReducer,
-	},
-	devTools: process.env.NODE_ENV !== "production",
+  reducer: {
+    menu: menuReducer,
+    auth: authReducer,
+    navbar: navbarReducer,
+    sidebar: sidebarReducer,
+    modal: modalReducer,
+    notes: notesListReducer,
+    // tags: tagsReducer,
+  },
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export type RootState = ReturnType<typeof store.getState>;
