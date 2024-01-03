@@ -29,7 +29,7 @@ const TrashCan = () => {
             <div className={styles.memoButton_space}>
               <div
                 id={styles.bottom_icons}
-                className={`material-icons`}
+                className={`${styles.deleteForever} material-icons`}
                 onClick={() => {
                   dispatch(deleteNote(memo.id));
                 }}

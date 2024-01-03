@@ -47,49 +47,58 @@ const Sidebar = () => {
 	// 현재 있는 사이드바 메뉴 색 입히기
 	const selectedMenuItem = useSelector((state: RootState) => state.menu.selectedMenu);
 
-	return (
-		<div className={`${styles.sidebar_space} ${isSidebarOpen ? styles.toggle_sidebar : ""}`}>
-			{sidebarItems.map((page) => {
-				return (
-					<React.Fragment key={page.id}>
-						{page.iconName === "edit" ? (
-							<div key={page.id} className={styles.sidebar_menu} onClick={handleOpen}>
-								<div
-									className={`${styles.sidebar_icons} material-symbols-outlined`}
-								>
-									{page.iconName}
-								</div>
-								<span>{page.name}</span>
-							</div>
-						) : (
-							<Link
-								href={page.link}
-								key={page.id}
-								className={`${styles.sidebar_menu} ${
-									selectedMenuItem === page.id ? styles.selected_menu : ""
-								}`}
-								onClick={() => {
-									handleItemClick(page.name, page.id); // 라벨 ID 전달
-									dispatch(setSelectedMenu(page.id));
-								}}
-							>
-								<div
-									className={`${
-										selectedMenuItem === page.id ? styles.selected_menu : ""
-									} ${styles.sidebar_icons} material-symbols-outlined`}
-								>
-									{page.iconName}
-								</div>
-								<span>{page.name}</span>
-							</Link>
-						)}
-					</React.Fragment>
-				);
-			})}
 
-			<ModalState />
-		</div>
-	);
+  return (
+    <div
+      className={`${styles.sidebar_space} ${
+        isSidebarOpen ? styles.toggle_sidebar : ""
+      }`}
+    >
+      {sidebarItems.map((page) => {
+        return (
+          <React.Fragment key={page.id}>
+            {page.iconName === "edit" ? (
+              <div
+                key={page.id}
+                className={styles.sidebar_menu}
+                onClick={handleOpen}
+              >
+                <div
+                  className={`${styles.sidebar_icons} material-symbols-outlined`}
+                >
+                  {page.iconName}
+                </div>
+                <span>{page.name}</span>
+              </div>
+            ) : (
+              <Link
+                href={page.link}
+                key={page.id}
+                className={`${styles.sidebar_menu} ${
+                  selectedMenuItem === page.id ? styles.selected_menu : ""
+                }`}
+                onClick={() => {
+                  handleItemClick(page.name, page.id); // 라벨 ID 전달
+                  dispatch(setSelectedMenu(page.id));
+                }}
+              >
+                <div
+                  className={`${
+                    selectedMenuItem === page.id ? styles.selected_menu : ""
+                  } ${styles.sidebar_icons} material-symbols-outlined`}
+                >
+                  {page.iconName}
+                </div>
+                <span>{page.name}</span>
+              </Link>
+            )}
+          </React.Fragment>
+        );
+      })}
+      <div className={styles.license}>Made by CPK</div>
+      <ModalState />
+    </div>
+  );
 };
 
 export default Sidebar;
