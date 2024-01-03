@@ -1,41 +1,44 @@
 @mixin flexCenter {
-	display: flex;
-	align-items: center !important;
+  display: flex;
+  align-items: center !important;
 }
 
-.pageBody {
-	display: flex;
-	width: 100vw;
-	height: 90vh;
+@mixin flexCenterX2 {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
 }
 
-//메인바디
 .main_body {
-	@include flexCenter();
-	flex-direction: column;
-	width: 100%;
-	transition: 0.5s;
+  @include flexCenter();
+  flex-direction: column;
+  width: 100%;
+  transition: 0.5s;
+  padding: 20px;
+  padding-left: 100px;
 }
 
 .explanation {
-	@include flexCenter();
-	flex-direction: column;
-	justify-content: center !important;
-	height: 100%;
+  @include flexCenter();
+  flex-direction: column;
+  justify-content: center !important;
+  width: 100%;
+  margin-top: 20vh;
+  z-index: -1;
 }
 
 .first_icon {
-	font: {
-		size: 8rem !important;
-		weight: bold !important;
-	}
-	color: gray;
+  font: {
+    size: 8rem !important;
+    weight: bold !important;
+  }
+  color: #37383a !important;
 }
 
 .first_text {
-	font: {
-		size: 1.5rem;
-	}
-	color: gray;
-	margin-top: 10px;
+  font: {
+    size: 1.5rem;
+  }
+  color: gray;
+  margin-top: 10px;
 }

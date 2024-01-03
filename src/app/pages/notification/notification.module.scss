@@ -3,25 +3,28 @@
   align-items: center !important;
 }
 
-.pageBody {
+@mixin flexCenterX2 {
   display: flex;
-  width: 100vw;
-  height: 90vh;
+  justify-content: center;
+  align-items: center !important;
 }
 
-//메인바디
 .main_body {
   @include flexCenter();
   flex-direction: column;
   width: 100%;
   transition: 0.5s;
+  padding: 20px;
+  padding-left: 100px;
 }
 
 .explanation {
   @include flexCenter();
   flex-direction: column;
   justify-content: center !important;
-  height: 100%;
+  width: 100%;
+  margin-top: 20vh;
+  z-index: -1;
 }
 
 .first_icon {
