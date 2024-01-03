@@ -95,7 +95,7 @@ const Sidebar = () => {
           </React.Fragment>
         );
       })}
-
+      <div className={styles.license}>Made by CPK</div>
       <ModalState />
     </div>
   );
