@@ -13,7 +13,7 @@ const notesSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
-      state.notes.push(action.payload);
+      state.notes.splice(0, 0, action.payload);
     },
     moveToTrashCan: (state, action) => {
       state.trashCan.push(action.payload);
@@ -40,9 +40,22 @@ const notesSlice = createSlice({
         (note) => note.id !== action.payload
       );
     },
+    actualPinToggle: (state, action: PayloadAction<string>) => {
+      state.notes = state.notes.map((note) =>
+        action.payload === note.id
+          ? { ...note, isPinned: !note.isPinned }
+          : note
+      );
+    },
   },
 });
 
-export const { addNote, moveToTrashCan, moveToArchive, moveBack, deleteNote } =
-  notesSlice.actions;
+export const {
+  addNote,
+  moveToTrashCan,
+  moveToArchive,
+  moveBack,
+  deleteNote,
+  actualPinToggle,
+} = notesSlice.actions;
 export default notesSlice.reducer;

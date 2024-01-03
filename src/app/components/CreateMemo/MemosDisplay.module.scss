@@ -109,3 +109,24 @@
   background-color: #494949;
   color: white;
 }
+
+.standsText {
+  margin-top: 10px;
+  color: #9aa0a6;
+  font-size: 12px;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.Notes_space {
+  display: flex;
+  flex-wrap: wrap;
+}
