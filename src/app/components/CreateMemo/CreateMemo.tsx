@@ -23,6 +23,7 @@ import BackgroundColor from "app/models/backgroundColor";
 import { v4 as uuidv4 } from "uuid";
 
 const CreateMemo = () => {
+
   const isModalVisible = useSelector(
     (state: RootState) => state.modal.paletteModalToggle
   );
