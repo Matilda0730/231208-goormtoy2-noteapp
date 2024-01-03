@@ -92,6 +92,10 @@ const CreateMemo = () => {
 
 	//메모창 textarea에 입력한 거 (title,text) 메모 생성 .닫기에 연결돼 있음
 	const createMemoAndSetTitleText = () => {
+		if (!title && !text) {
+			// 제목과 내용이 모두 비어있으면 저장하지 않음
+			return;
+		}
 		const currentTime = new Date().getTime();
 
 		const newNote: Note = {
@@ -125,6 +129,9 @@ const CreateMemo = () => {
 			setIsVisible(false); // CreateMemo 닫기
 			if (isModalVisible) {
 				dispatch(togglePaletteModal()); // ColorModal 닫기
+			}
+			if (title || text) {
+				createMemoAndSetTitleText();
 			}
 		}
 	};
