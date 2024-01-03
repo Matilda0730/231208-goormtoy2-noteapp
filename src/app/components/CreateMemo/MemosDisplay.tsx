@@ -12,26 +12,27 @@ import {
   moveToTrashCan,
 } from "@slice/memo/notesSlice";
 
-
 interface MemosDisplayProps {
-	memos: Note[]; // Note 타입의 배열을 받는 memos prop 추가
+  memos: Note[]; // Note 타입의 배열을 받는 memos prop 추가
 }
-        
-const MemosDisplay = () => {
+
+const MemosDisplay: React.FC<MemosDisplayProps> = ({ displayMemos }) => {
   const [pinClicked, setPinClicked] = useState<boolean>(false);
   const dispatch = useDispatch();
-    
-  const MemosDisplay: React.FC<MemosDisplayProps> = ({ displayMemos }) => {
-	const memos = useSelector((state: RootState) => state.notes.notes);
-	const selectedLabelId = useSelector((state: RootState) => state.menu.selectedLabelId);
-	const filteredMemos = memos.filter((memo) =>
-		selectedLabelId ? memo.tags && memo.tags.some((tag) => tag.id === selectedLabelId) : true
-	);
-	
 
-	const handleToggleModal = () => {
-		dispatch(togglePaletteModal());
-	};
+  const memos = useSelector((state: RootState) => state.notes.notes);
+  const selectedLabelId = useSelector(
+    (state: RootState) => state.menu.selectedLabelId
+  );
+  const filteredMemos = memos.filter((memo) =>
+    selectedLabelId
+      ? memo.tags && memo.tags.some((tag) => tag.id === selectedLabelId)
+      : true
+  );
+
+  const handleToggleModal = () => {
+    dispatch(togglePaletteModal());
+  };
 
   const pinnedNotes = memos.filter((notes) => notes.isPinned);
   const normalNotes = memos.filter((notes) => !notes.isPinned);
