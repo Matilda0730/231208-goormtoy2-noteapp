@@ -179,6 +179,7 @@ const CreateMemo = () => {
                 <div className={`material-symbols-outlined`}>push_pin</div>
               </div>
               <textarea
+                autoFocus
                 ref={textareaRef}
                 className={styles.create_space_text}
                 placeholder="메모 작성..."
