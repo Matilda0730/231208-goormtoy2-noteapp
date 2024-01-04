@@ -103,6 +103,13 @@ const CreateMemo = () => {
 			.filter((label): label is Label => label !== undefined);
 	}, [selectedLabelsState, labels]);
 
+	const [isPinned, setIsPinned] = useState<boolean>(false); // 메모 고정 상태
+
+	// 'push_pin' 아이콘 클릭 핸들러
+	const handlePinClick = () => {
+		setIsPinned(!isPinned);
+	};
+
 	//메모창 textarea에 입력한 거 (title,text) 메모 생성 .닫기에 연결돼 있음
 	const createMemoAndSetTitleText = () => {
 		const currentTime = new Date().getTime();
@@ -113,7 +120,7 @@ const CreateMemo = () => {
 			text: text,
 			tags: selectedLabelObjects,
 			backgroundColor: currentBackgroundColor,
-			isPinned: false,
+			isPinned: isPinned,
 			isRead: false,
 			createdTime: currentTime,
 			editedTime: null,
@@ -124,6 +131,7 @@ const CreateMemo = () => {
 		setIsVisible(false);
 		setTitle(""); // 제목 초기화
 		setText(""); // 내용 초기화
+		setIsPinned(false);
 	};
 
 	//모달 바깥 클릭하면
@@ -181,7 +189,14 @@ const CreateMemo = () => {
 									onClick={handleMemoClickHTML}
 									style={{ backgroundColor: backgroundColor || defaultColor }}
 								/>
-								<div className={`material-symbols-outlined`}>push_pin</div>
+								<div
+									className={`material-symbols-outlined ${
+										isPinned ? "active" : ""
+									}`}
+									onClick={handlePinClick}
+								>
+									push_pin
+								</div>
 							</div>
 							<textarea
 								autoFocus
