@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import MemoLabelModal from "./MemoLabelModal";
-import { addNote } from "reduxprops/features/memo/notesSlice";
+import { addNote, moveToArchive } from "reduxprops/features/memo/notesSlice";
 import { Note } from "app/models/note";
 import BackgroundColor from "app/models/backgroundColor";
 import { v4 as uuidv4 } from "uuid";
@@ -37,7 +37,8 @@ const CreateMemo = () => {
 	//"label" 아이콘을 클릭했을 때 isLabelModalVisible 상태를 토글하는 핸들러에 연결
 	const isLabelModalVisible = useSelector((state: RootState) => state.modal.memoLabelModalToggle);
 
-	const handleToggleLabelModal = () => {
+	const handleToggleLabelModal = (event: React.MouseEvent) => {
+		event.stopPropagation();
 		dispatch(toggleMemoLabelModal());
 	};
 
@@ -169,6 +170,38 @@ const CreateMemo = () => {
 		}
 	}, [isVisible, dispatch]);
 
+	// 아카이브로 메모 보내는 함수
+	const handleArchiveMemo = (memoId: string) => {
+		dispatch(moveToArchive(memoId));
+	};
+
+	// 제목이나 내용 중 하나라도 있는 경우 아카이브 버튼에 대한 클릭 이벤트 핸들러
+	const onArchiveClick = () => {
+		if (title || text) {
+			const currentTime = new Date().getTime();
+			const newNote: Note = {
+				id: uuidv4(),
+				title: title,
+				text: text,
+				tags: selectedLabelObjects,
+				backgroundColor: currentBackgroundColor,
+				isPinned: isPinned,
+				isRead: false,
+				createdTime: currentTime,
+				editedTime: null,
+			};
+
+			dispatch(moveToArchive(newNote)); // 추가한 메모를 아카이브로 이동
+
+			// UI 초기화
+			setIsVisible(false);
+			setTitle("");
+			setText("");
+			setIsPinned(false);
+			dispatch(clearSelectedLabels());
+		}
+	};
+
 	return (
 		<>
 			{isVisible ? (
@@ -190,9 +223,9 @@ const CreateMemo = () => {
 									style={{ backgroundColor: backgroundColor || defaultColor }}
 								/>
 								<div
-									className={`material-symbols-outlined ${
-										isPinned ? "active" : ""
-									}`}
+									className={
+										isPinned ? "material-icons" : "material-symbols-outlined"
+									}
 									onClick={handlePinClick}
 								>
 									push_pin
@@ -234,10 +267,15 @@ const CreateMemo = () => {
 									palette
 								</div>
 
-								<div className={`material-symbols-outlined`}>archive</div>
 								<div
 									className={`material-symbols-outlined`}
-									onClick={handleToggleLabelModal}
+									onClick={onArchiveClick}
+								>
+									archive
+								</div>
+								<div
+									className={`material-symbols-outlined`}
+									onClick={(e) => handleToggleLabelModal(e)}
 								>
 									label
 								</div>
