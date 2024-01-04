@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Note } from "app/models/note";
 import styles from "./MemosDisplay.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,23 +8,29 @@ import { togglePaletteModal } from "@slice/modal/modalSlice";
 import ColorModal from "./ColorModal";
 import { actualPinToggle, moveToArchive, moveToTrashCan } from "@slice/memo/notesSlice";
 
-interface MemosDisplayProps {
-	memos: Note[]; // Note 타입의 배열을 받는 memos prop 추가
-}
-
-const MemosDisplay: React.FC<MemosDisplayProps> = ({ displayMemos }) => {
-	const [pinClicked, setPinClicked] = useState<boolean>(false);
+const MemosDisplay = () => {
 	const dispatch = useDispatch();
+	const allMemos = useSelector((state: RootState) => state.notes.notes);
+	const selectedLabelId = useSelector((state: RootState) => state.menu.selectedLabelId);
+
+	const [pinnedFilteredMemos, setPinnedFilteredMemos] = useState<Note[]>([]);
+	const [normalFilteredMemos, setNormalFilteredMemos] = useState<Note[]>([]);
+
+	useEffect(() => {
+		const filteredMemos = selectedLabelId
+			? allMemos.filter((memo) => memo.tags?.some((tag) => tag.id === selectedLabelId))
+			: allMemos;
+
+		const pinnedMemos = filteredMemos.filter((memo) => memo.isPinned);
+		const normalMemos = filteredMemos.filter((memo) => !memo.isPinned);
+
+		setPinnedFilteredMemos(pinnedMemos);
+		setNormalFilteredMemos(normalMemos);
+	}, [selectedLabelId, allMemos]);
+
+	const [pinClicked, setPinClicked] = useState<boolean>(false);
 
 	const memos = useSelector((state: RootState) => state.notes.notes);
-	const selectedLabelId = useSelector((state: RootState) => state.menu.selectedLabelId);
-	const filteredMemos = memos.filter((memo) =>
-		selectedLabelId ? memo.tags && memo.tags.some((tag) => tag.id === selectedLabelId) : true
-	);
-
-	const handleToggleModal = () => {
-		dispatch(togglePaletteModal());
-	};
 
 	const pinnedNotes = memos.filter((notes) => notes.isPinned);
 	const normalNotes = memos.filter((notes) => !notes.isPinned);
@@ -51,12 +57,11 @@ const MemosDisplay: React.FC<MemosDisplayProps> = ({ displayMemos }) => {
 											<h3 style={{ marginBottom: "10px" }}>{memo.title}</h3>
 											<p>{memo.text}</p>
 											<div className={styles.labels_container}>
-												{memo.tags &&
-													memo.tags.map((label, index) => (
-														<span key={index} className={styles.label}>
-															{label.name}
-														</span>
-													))}
+												{memo.tags?.map((label, index) => (
+													<span key={index} className={styles.label}>
+														{label.name}
+													</span>
+												))}
 											</div>
 											<div
 												id={styles.push_pin}
