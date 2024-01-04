@@ -22,8 +22,9 @@ const MemoLabelModal = () => {
 		[key: string]: boolean;
 	}>({}); // 선택된 라벨 상태
 	const isLabelModalOpen = useSelector((state: RootState) => state.modal.memoLabelModalToggle);
-	const handleCloseFromOutside = () => {
+	const handleCloseFromOutside = (event: React.MouseEvent) => {
 		if (isLabelModalOpen) {
+			event.stopPropagation();
 			dispatch(toggleMemoLabelModal());
 		}
 	};
@@ -51,8 +52,9 @@ const MemoLabelModal = () => {
 	// 라벨 생성 버튼 표시 여부 확인
 	const showCreateLabelButton = labelSearch && !filteredLabels.length;
 
-	const handleCreateNewLabel = () => {
+	const handleCreateNewLabel = (event: React.MouseEvent) => {
 		// 라벨 생성 로직 (Redux 액션 디스패치)
+		event.stopPropagation();
 		dispatch(setCreatedLabel(labelSearch));
 	};
 
@@ -83,13 +85,13 @@ const MemoLabelModal = () => {
 				!modalRef.current.contains(event.target as Node) &&
 				isLabelModalOpen
 			) {
-				handleCloseFromOutside();
+				(e: React.MouseEvent) => handleCloseFromOutside(e);
 			}
 		};
 
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
-				handleCloseFromOutside();
+				(e: React.MouseEvent) => handleCloseFromOutside(e);
 			}
 		};
 
@@ -149,7 +151,10 @@ const MemoLabelModal = () => {
 					))}
 					<div>
 						{showCreateLabelButton && (
-							<div onClick={handleCreateNewLabel} className={styles.labelMaking}>
+							<div
+								onClick={(e) => handleCreateNewLabel(e)}
+								className={styles.labelMaking}
+							>
 								{labelSearch} 라벨 만들기
 							</div>
 						)}
