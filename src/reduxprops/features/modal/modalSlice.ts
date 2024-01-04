@@ -6,6 +6,7 @@ interface ModalState {
   isModalOpen: boolean;
   isConfirmModalOpen: boolean;
   isConfirmEditModalOpen: boolean;
+  isNoteModalOpen: boolean;
   isColorModalVisible: boolean;
   isColorModalToggleVisible: boolean;
   colorModalClose: boolean;
@@ -19,6 +20,7 @@ const initialState: ModalState = {
   isModalOpen: false,
   isConfirmModalOpen: false,
   isConfirmEditModalOpen: false,
+  isNoteModalOpen: false,
   isColorModalVisible: false,
   isColorModalToggleVisible: false,
   colorModalClose: false,
@@ -51,6 +53,12 @@ const modalSlice = createSlice({
     handleCloseEditConfirmModal: (state) => {
       state.isConfirmEditModalOpen = false;
     },
+    handleOpenNoteModal: (state) => {
+      state.isNoteModalOpen = true;
+    },
+    handleCloseNoteModal: (state) => {
+      state.isNoteModalOpen = false;
+    },
     togglePaletteModal: (state) => {
       state.paletteModalToggle = !state.paletteModalToggle;
     },
@@ -76,6 +84,8 @@ export const {
   handleCloseConfirmModal,
   handleOpenEditConfirmModal,
   handleCloseEditConfirmModal,
+  handleOpenNoteModal,
+  handleCloseNoteModal,
   togglePaletteModal,
   setBackgroundColor,
   toggleMemoLabelModal,

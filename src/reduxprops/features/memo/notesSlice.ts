@@ -34,6 +34,12 @@ const notesSlice = createSlice({
       state.archiveList = state.archiveList.filter(
         (note) => note.id !== action.payload.id
       );
+      state.notes = state.notes.map((note) => {
+        if (note.id === action.payload.id) {
+          return { ...note, isPinned: false };
+        }
+        return note;
+      });
     },
     deleteNote: (state, action) => {
       state.trashCan = state.trashCan.filter(
