@@ -107,6 +107,7 @@ const NoteModal = () => {
                   className={`material-symbols-outlined`}
                   onClick={() => {
                     dispatch(moveToArchive(selectedMemo));
+                    handleClose();
                   }}
                 >
                   archive
@@ -123,6 +124,7 @@ const NoteModal = () => {
                   className={`material-symbols-outlined`}
                   onClick={() => {
                     dispatch(moveToTrashCan(selectedMemo));
+                    handleClose();
                   }}
                 >
                   delete
