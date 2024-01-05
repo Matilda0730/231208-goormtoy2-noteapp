@@ -81,6 +81,7 @@ const MemoLabelModal = () => {
     } else {
       // 같은 이름의 라벨이 없다면 새로운 라벨을 생성
       dispatch(setCreatedLabel(labelSearch));
+      setLabelSearch("");
     }
   };
 

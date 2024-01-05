@@ -71,7 +71,7 @@ const MemosDisplay = () => {
           }}
         >
           <h3 style={{ marginBottom: "10px" }}>{memo.title}</h3>
-          <p>{memo.text}</p>
+          <p style={{ whiteSpace: "pre-wrap" }}>{memo.text}</p>
           <div
             id={styles.push_pin}
             className={`${

@@ -11,7 +11,7 @@
 
 .modal_container {
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 50%;
 }
 
@@ -27,7 +27,7 @@
   justify-content: space-between;
   min-width: 500px;
   max-width: 600px;
-  height: fit-content;
+  height: auto;
   min-height: 100px;
   padding: 5px;
   border: 1px solid #5f6368;
@@ -43,13 +43,32 @@
 
 .memo {
   position: relative;
-  row-gap: 10px;
   color: white;
   padding: 15px;
   padding-right: 40px;
-  height: fit-content;
+  height: auto;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+.title {
+  width: 100%;
+  border: none;
+  margin-bottom: 10px;
+  background-color: transparent;
+  color: white;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.text {
+  width: 100%;
+  height: auto;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+  white-space: pre-wrap; /* 줄 바꿈 및 공백 유지 */
 }
 
 #push_pin {
