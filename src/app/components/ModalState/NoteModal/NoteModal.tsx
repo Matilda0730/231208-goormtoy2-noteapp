@@ -62,10 +62,12 @@ const NoteModal = () => {
               style={{ backgroundColor: selectedMemo.backgroundColor }}
             >
               <div key={selectedMemo.id} className={styles.memo}>
-                <h3 style={{ marginBottom: "20px" }}>
-                  {selectedMemo.title === null ? `제목` : selectedMemo.title}
-                </h3>
-                <p>{selectedMemo.text}</p>
+                <input
+                  className={styles.title}
+                  value={selectedMemo.title}
+                  placeholder="제목"
+                ></input>
+                <div className={styles.text}>{selectedMemo.text}</div>
                 <div
                   id={styles.push_pin}
                   className={`${

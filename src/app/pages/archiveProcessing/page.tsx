@@ -3,7 +3,12 @@
 import React, { useState } from "react";
 
 import styles from "./archiveProcessing.module.scss";
-import { deleteNote, moveBack, moveToTrashCan } from "@slice/memo/notesSlice";
+import {
+  actualPinToggle,
+  deleteNote,
+  moveBack,
+  moveToTrashCan,
+} from "@slice/memo/notesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 
@@ -24,8 +29,15 @@ const ArchiveProcessing = () => {
           >
             <div key={memo.id} className={styles.memo}>
               <h3 style={{ marginBottom: "10px" }}>{memo.title}</h3>
-              <p>{memo.text}</p>
-              <div id={styles.push_pin} className={`material-symbols-outlined`}>
+              <p style={{ whiteSpace: "pre-wrap" }}>{memo.text}</p>
+              <div
+                id={styles.push_pin}
+                className={`material-symbols-outlined`}
+                onClick={() => {
+                  dispatch(moveBack(memo));
+                  dispatch(actualPinToggle(memo.id));
+                }}
+              >
                 push_pin
               </div>
             </div>

@@ -15,9 +15,10 @@ a {
 body {
   background-color: #202124;
   position: relative;
-  height: calc(100vh - 62px);
+  min-height: calc(100vh - 62px);
   margin-top: 62px;
   display: flex;
+  overflow-y: auto;
 }
 
 .icons {

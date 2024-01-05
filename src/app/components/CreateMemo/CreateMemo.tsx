@@ -120,6 +120,9 @@ const CreateMemo = () => {
 
   //메모창 textarea에 입력한 거 (title,text) 메모 생성 .닫기에 연결돼 있음
   const createMemoAndSetTitleText = () => {
+    if (title === "" && text === "") {
+      return;
+    }
     const currentTime = new Date().getTime();
 
     const newNote: Note = {
@@ -262,7 +265,7 @@ const CreateMemo = () => {
                 className={styles.button_close}
                 onClick={createMemoAndSetTitleText}
               >
-                닫기
+                작성
               </div>
             </div>
           </div>

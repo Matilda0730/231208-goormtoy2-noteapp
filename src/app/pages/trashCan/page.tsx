@@ -24,7 +24,7 @@ const TrashCan = () => {
           >
             <div key={memo.id} className={styles.memo}>
               <h3 style={{ marginBottom: "10px" }}>{memo.title}</h3>
-              <p>{memo.text}</p>
+              <p style={{ whiteSpace: "pre-wrap" }}>{memo.text}</p>
             </div>
             <div className={styles.memoButton_space}>
               <div
