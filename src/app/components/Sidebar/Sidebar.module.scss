@@ -11,8 +11,8 @@
 //
 //사이드바
 .sidebar_space {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   align-items: flex-start;
   width: 70px;
   min-width: 70px;
@@ -21,8 +21,13 @@
   background-color: #202124;
   color: white;
   overflow: hidden;
+  overflow-y: auto !important;
   z-index: 1;
   transition: 0.3s;
+}
+
+.sidebar_space::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar_space:hover {

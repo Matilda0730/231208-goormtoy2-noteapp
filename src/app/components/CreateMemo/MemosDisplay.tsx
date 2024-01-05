@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, MouseEvent } from "react";
 import { Note } from "app/models/note";
 import styles from "./MemosDisplay.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reduxprops/store/store";
 import {
+  handleCloseNoteModal,
   handleOpenNoteModal,
   togglePaletteModal,
 } from "@slice/modal/modalSlice";
@@ -46,7 +47,11 @@ const MemosDisplay = () => {
   const pinnedNotes = memos.filter((notes) => notes.isPinned);
   const normalNotes = memos.filter((notes) => !notes.isPinned);
 
-  const pinToggle = (memoId: string) => {
+  const pinToggle = (
+    memoId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    event.stopPropagation();
     dispatch(actualPinToggle(memoId));
   };
 
@@ -72,8 +77,8 @@ const MemosDisplay = () => {
             className={`${
               memo.isPinned ? `material-icons` : `material-symbols-outlined`
             }`}
-            onClick={() => {
-              pinToggle(memo.id);
+            onClick={(event) => {
+              pinToggle(memo.id, event);
             }}
           >
             push_pin

@@ -75,9 +75,21 @@
   left: 4px;
 }
 
+.custom_checkbox_label {
+  display: flex;
+}
+
 .label_item {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  width: 100%;
   margin-bottom: 3px;
+}
+
+.label_name {
+  width: 200px;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
