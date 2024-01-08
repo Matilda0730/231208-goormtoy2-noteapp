@@ -180,22 +180,6 @@ const CreateMemo = () => {
     }
   }, [isVisible, dispatch]);
 
-  // function createMarkup() {
-  //   return { __html: textContent };
-  // }
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      // Enter 키가 눌렸을 때 Tab 키를 누른 것처럼 시뮬레이션
-      event.preventDefault(); // 기본 동작을 취소
-      const tabKeyEvent = new KeyboardEvent("keydown", {
-        key: "Tab",
-        keyCode: 9,
-      });
-      document.dispatchEvent(tabKeyEvent);
-    }
-  };
-
   return (
     <>
       {isVisible ? (
@@ -215,9 +199,6 @@ const CreateMemo = () => {
                   onChange={handleChangeTitle}
                   onClick={handleMemoClickHTML}
                   style={{ backgroundColor: backgroundColor || defaultColor }}
-                  onKeyDown={(event) => {
-                    handleKeyDown;
-                  }}
                 />
                 <div className={`material-symbols-outlined`}>push_pin</div>
               </div>
