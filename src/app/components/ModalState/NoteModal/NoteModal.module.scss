@@ -63,12 +63,13 @@
 
 .text {
   width: 100%;
-  height: auto;
   border: none;
   background-color: transparent;
   color: white;
   font-size: 15px;
   white-space: pre-wrap; /* 줄 바꿈 및 공백 유지 */
+  resize: none;
+  overflow: hidden;
 }
 
 #push_pin {

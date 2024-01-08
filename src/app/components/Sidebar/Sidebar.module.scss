@@ -8,15 +8,10 @@
   justify-content: center !important;
   align-items: center !important;
 }
-//
-//사이드바
+
 .sidebar_space {
-  // display: flex;
-  // flex-direction: column;
-  align-items: flex-start;
   width: 70px;
   min-width: 70px;
-  height: calc(100% - 10px);
   padding-top: 10px;
   background-color: #202124;
   color: white;

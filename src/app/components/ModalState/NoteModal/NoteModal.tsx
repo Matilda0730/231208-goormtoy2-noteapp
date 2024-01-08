@@ -3,8 +3,9 @@
 import {
   handleCloseNoteModal,
   handleOpenNoteModal,
+  togglePaletteModal,
 } from "@slice/modal/modalSlice";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./NoteModal.module.scss";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +14,8 @@ import {
   actualPinToggle,
   moveToArchive,
   moveToTrashCan,
+  updateNoteText,
+  updateNoteTitle,
 } from "@slice/memo/notesSlice";
 
 const NoteModal = () => {
@@ -34,8 +37,41 @@ const NoteModal = () => {
     state.notes.notes.find((memo) => memo.id === selectedMemoId)
   );
 
+  const [noteTitle, setNoteTitle] = useState(selectedMemo?.title || "");
+  const [noteText, setNoteText] = useState(selectedMemo?.text || "");
+
+  useEffect(() => {
+    if (selectedMemo) {
+      setNoteTitle(selectedMemo?.title || "");
+      setNoteText(selectedMemo?.text || "");
+    }
+  }, [selectedMemo]);
+
+  const handleNoteTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    if (selectedMemo) {
+      dispatch(updateNoteTitle({ memoId: selectedMemo.id, newTitle }));
+    }
+    setNoteTitle(newTitle);
+  };
+
+  const handleNoteText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = e.target.value;
+    if (selectedMemo) {
+      dispatch(updateNoteText({ memoId: selectedMemo.id, newText }));
+    }
+    setNoteText(newText);
+  };
+
   const pinToggle = (memoId: string) => {
     dispatch(actualPinToggle(memoId));
+  };
+
+  const autoResize = (element: HTMLTextAreaElement | null) => {
+    if (element) {
+      element.style.height = "auto";
+      element.style.height = element.scrollHeight + "px";
+    }
   };
 
   //Modal창 바깥 배경
@@ -64,10 +100,16 @@ const NoteModal = () => {
               <div key={selectedMemo.id} className={styles.memo}>
                 <input
                   className={styles.title}
-                  value={selectedMemo.title}
+                  value={noteTitle}
+                  onChange={handleNoteTitle}
                   placeholder="제목"
                 ></input>
-                <div className={styles.text}>{selectedMemo.text}</div>
+                <textarea
+                  className={styles.text}
+                  value={noteText}
+                  onChange={handleNoteText}
+                  onInput={(e) => autoResize(e.currentTarget)}
+                ></textarea>
                 <div
                   id={styles.push_pin}
                   className={`${
@@ -100,7 +142,6 @@ const NoteModal = () => {
                 <div
                   id={styles.bottom_icons}
                   className={`material-symbols-outlined`}
-                  // onClick={handleToggleModal}
                 >
                   palette
                 </div>
@@ -117,7 +158,9 @@ const NoteModal = () => {
                 <div
                   id={styles.bottom_icons}
                   className={`material-symbols-outlined`}
-                  // onClick={handleToggleLabelModal}
+                  onClick={() => {
+                    dispatch(togglePaletteModal());
+                  }}
                 >
                   label
                 </div>
@@ -131,7 +174,12 @@ const NoteModal = () => {
                 >
                   delete
                 </div>
-                <div className={styles.closeButton} onClick={handleClose}>
+                <div
+                  className={styles.closeButton}
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
                   닫기
                 </div>
               </div>
