@@ -2,7 +2,6 @@
 
 import {
   handleCloseNoteModal,
-  handleOpenNoteModal,
   togglePaletteModal,
 } from "@slice/modal/modalSlice";
 import React, { useEffect, useState } from "react";
