@@ -15,6 +15,26 @@ const notesSlice = createSlice({
     addNote: (state, action: PayloadAction<Note>) => {
       state.notes.splice(0, 0, action.payload);
     },
+    updateNoteTitle: (
+      state,
+      action: PayloadAction<{ memoId: string; newTitle: string }>
+    ) => {
+      const { memoId, newTitle } = action.payload;
+      const memoToUpdate = state.notes.find((memo) => memo.id === memoId);
+      if (memoToUpdate) {
+        memoToUpdate.title = newTitle;
+      }
+    },
+    updateNoteText: (
+      state,
+      action: PayloadAction<{ memoId: string; newText: string }>
+    ) => {
+      const { memoId, newText } = action.payload;
+      const memoToUpdate = state.notes.find((memo) => memo.id === memoId);
+      if (memoToUpdate) {
+        memoToUpdate.text = newText;
+      }
+    },
     moveToTrashCan: (state, action) => {
       state.trashCan.push(action.payload);
       state.notes = state.notes.filter((note) => note.id !== action.payload.id);
@@ -58,6 +78,8 @@ const notesSlice = createSlice({
 
 export const {
   addNote,
+  updateNoteTitle,
+  updateNoteText,
   moveToTrashCan,
   moveToArchive,
   moveBack,
