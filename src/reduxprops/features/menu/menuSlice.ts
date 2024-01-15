@@ -3,12 +3,15 @@ import LabelItem from "app/models/labelItem";
 import { v4 as uuidv4 } from "uuid";
 import { handleOpenEditConfirmModal } from "@slice/modal/modalSlice";
 import { Note } from "app/models/note";
+import {Label} from "app/models/Label";
 interface SidebarItem {
   name: string;
   iconName: string;
   link: string;
   id: string;
 }
+
+type TagType = Label;
 
 interface SidebarState {
   items: SidebarItem[];
@@ -26,6 +29,7 @@ interface SidebarState {
   selectedLabelId: string | null;
   labelMemos: Note[];
   selectedMemoId: string | null;
+  notes: Note[];
 }
 
 const initialState: SidebarState = {
@@ -74,6 +78,7 @@ const initialState: SidebarState = {
   selectedLabelId: null,
   labelMemos: [],
   selectedMemoId: null,
+  notes: [],
 };
 
 const menuSlice = createSlice({
@@ -135,24 +140,58 @@ const menuSlice = createSlice({
     updateLabel: (state, action) => {
       const updatedLabel: SidebarItem = action.payload;
       const originalLabel = state.labelToEdit;
+ // originalLabel이 null이 아닌지 확인
+ if (originalLabel) {
+  // 라벨 목록 업데이트
+  state.newLabelSpace = state.newLabelSpace.map(label =>
+    label.id === originalLabel.id ? updatedLabel : label
+  );
 
-      const existingLabel = state.newLabelSpace.find(
-        (label) =>
-          label.name === updatedLabel.name && label.id !== originalLabel?.id
-      );
-      state.newLabelSpace = state.newLabelSpace
-        .map((label) => {
-          return label.name === originalLabel!.name ? updatedLabel : label;
-        })
-        .sort((a, b) => a.name.localeCompare(b.name));
+  // 메모의 라벨 정보 업데이트
+  state.notes.forEach(note => {
+    if(note.tags){
+    note.tags = note.tags.map(tag => {
+      if (tag.id === originalLabel.id) {
+        return {
+          ...tag,
+          id: updatedLabel.id,   // 라벨 ID 업데이트
+          name: updatedLabel.name // 라벨 이름 업데이트
+        };
+      } else {
+        return tag;
+      }
+    })}
+  });
+}
+      // const existingLabel = state.newLabelSpace.find(
+      //   (label) =>
+      //     label.name === updatedLabel.name && label.id !== originalLabel?.id
+      // );
+      // state.newLabelSpace = state.newLabelSpace
+      //   .map((label) => {
+      //     return label.name === originalLabel!.name ? updatedLabel : label;
+      //   })
+      //   .sort((a, b) => a.name.localeCompare(b.name));
 
-      const updatedLabels = [
-        ...state.items.slice(0, 2),
-        ...state.newLabelSpace,
-        ...state.items.slice(2 + state.newLabelSpace.length),
-      ];
+      // const updatedLabels = [
+      //   ...state.items.slice(0, 2),
+      //   ...state.newLabelSpace,
+      //   ...state.items.slice(2 + state.newLabelSpace.length),
+      // ];
 
-      state.items = updatedLabels;
+      // state.items = updatedLabels;
+
+      // state.notes.forEach(note => {
+      //   if (note.tags) {
+      //     note.tags.forEach(tag => {
+      //       if (originalLabel) {
+      //       if (tag.id === originalLabel.id) {
+      //         tag.name = updatedLabel.name; // 라벨 이름 업데이트
+      //       }
+      //     }
+      //     });
+      //   }
+      // });
     },
     setMergeToExistedLabel: (state, action) => {
       state.mergeToExisted = action.payload;
@@ -178,8 +217,22 @@ const menuSlice = createSlice({
     setSelectedMemoId: (state, action: PayloadAction<string | null>) => {
       state.selectedMemoId = action.payload;
     },
-  },
-});
+    mergeLabels: (state, action) => {
+      const { fromLabel, toLabel } = action.payload;
+      state.notes.forEach((note) => {
+        if (note.tags) {
+          note.tags.forEach((tag) => {
+            if (tag.name === fromLabel) {
+              tag.name = toLabel; // 라벨 이름 변경
+            }
+          });
+        }
+      });
+      if (state.selectedLabelId === fromLabel.id) {
+        state.selectedLabelId = toLabel.id;
+      }
+    },
+}});
 
 export const {
   setSelectedItem,
@@ -196,6 +249,7 @@ export const {
   setSelectedLabelId,
   setLabelMemos,
   setSelectedMemoId,
+  mergeLabels
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

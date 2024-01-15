@@ -8,6 +8,8 @@ import {
   deleteLabel,
   setLabelToDelete,
   setMergeFlag,
+  mergeLabels,
+  setSelectedLabelId
 } from "@slice/menu/menuSlice";
 
 const EditConfirmModal = () => {
@@ -52,6 +54,7 @@ const EditConfirmModal = () => {
           onClick={() => {
             dispatch(deleteLabel(mergeToExisted!.name));
             dispatch(setMergeFlag(true));
+            dispatch(setSelectedLabelId(existedLabel!.id));
             dispatch(handleCloseEditConfirmModal());
           }}
           className={styles.mergeBtn}
