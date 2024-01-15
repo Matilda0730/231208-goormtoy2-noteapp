@@ -17,30 +17,41 @@ import {
 } from "@slice/memo/notesSlice";
 import NoteModal from "@components/ModalState/NoteModal/NoteModal";
 import { setSelectedMemoId } from "@slice/menu/menuSlice";
+import { usePathname, useRouter } from "next/navigation"
 
 const MemosDisplay = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const dispatch = useDispatch();
   const allMemos = useSelector((state: RootState) => state.notes.notes);
   const selectedLabelId = useSelector(
     (state: RootState) => state.menu.selectedLabelId
   );
+  const labels = useSelector((state: RootState) => state.menu.newLabelSpace);
 
   const [pinnedFilteredMemos, setPinnedFilteredMemos] = useState<Note[]>([]);
   const [normalFilteredMemos, setNormalFilteredMemos] = useState<Note[]>([]);
 
   useEffect(() => {
-    const filteredMemos = selectedLabelId
-      ? allMemos.filter((memo) =>
-          memo.tags?.some((tag) => tag.id === selectedLabelId)
-        )
-      : allMemos;
-
+    let filteredMemos;
+    // 선택된 라벨 ID에 따라 메모 필터링
+    if (pathname === '/') {
+      filteredMemos = allMemos;
+    } else {
+      filteredMemos = selectedLabelId
+        ? allMemos.filter(memo =>
+            memo.tags?.some(tag => tag.id === selectedLabelId))
+        : allMemos;
+    }
+    // 고정된 메모와 일반 메모로 분류
     const pinnedMemos = filteredMemos.filter((memo) => memo.isPinned);
     const normalMemos = filteredMemos.filter((memo) => !memo.isPinned);
-
+  
+    // 상태 업데이트
     setPinnedFilteredMemos(pinnedMemos);
     setNormalFilteredMemos(normalMemos);
-  }, [selectedLabelId, allMemos]);
+  }, [selectedLabelId, allMemos, pathname]);
+
 
   const memos = useSelector((state: RootState) => state.notes.notes);
 
@@ -136,38 +147,42 @@ const MemosDisplay = () => {
 
   return (
     <>
-      <div className={styles.memo_space}>
-        {memos.length > 0 ? (
-          pinnedNotes.length > 0 ? (
+    <div className={styles.memo_space}>
+      {pinnedFilteredMemos.length > 0 || normalFilteredMemos.length > 0 ? (
+        <>
+          {pinnedFilteredMemos.length > 0 && (
             <div className={styles.pinSituation}>
               <div className={styles.standsText}>고정됨</div>
               <div className={styles.Notes_space}>
-                {mapElements(pinnedNotes)}
+                {mapElements(pinnedFilteredMemos)}
               </div>
-              {normalNotes.length > 0 ? (
+            </div>
+          )}
+
+          {normalFilteredMemos.length > 0 && (
+            <div>
+              {pinnedFilteredMemos.length > 0 && (
                 <div className={styles.standsText}>기타</div>
-              ) : null}
+              )}
               <div className={styles.Notes_space}>
-                {mapElements(normalNotes)}
-              </div>
-            </div>
-          ) : (
-            mapElements(memos)
-          )
-        ) : (
-          <div className={styles.explanation}>
-            <div className={`${styles.first_icon} material-symbols-outlined`}>
-              lightbulb
-            </div>
-            <span className={styles.first_text}>
-              추가한 메모가 여기에 표시됩니다.
-            </span>
-          </div>
-        )}
-      </div>
-      <NoteModal />
+                {mapElements(normalFilteredMemos)}
+                </div>
+        </div>
+      )}
     </>
-  );
-};
+  ) : (
+    <div className={styles.explanation}>
+      <div className={`${styles.first_icon} material-symbols-outlined`}>
+        lightbulb
+      </div>
+      <span className={styles.first_text}>
+        추가한 메모가 여기에 표시됩니다.
+      </span>
+    </div>
+  )}
+</div>
+<NoteModal />
+</>
+  )}
 
 export default MemosDisplay;
