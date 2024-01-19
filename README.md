@@ -14,7 +14,7 @@
 - 박준수 : 컴포넌트 관리, 전체적인 기능 구현 피드백 및 error fixing
 
 # ⚙️사용한 기술
-- Next.js 13
+- Next.js 14
 - React-Redux toolkit
 - TypeScript
 - SCSS
